@@ -25,7 +25,7 @@ def view_schedules():
         student_schedules = db_helper.fetch_schedules(netid)
         friend_schedules = db_helper.fetch_friend_schedules(netid)
 
-    return render_template("View-Schedules.html", sched=student_schedules, fsched=friend_schedules, cdata=course_data)
+    return render_template("View_Schedules.html", sched=student_schedules, fsched=friend_schedules, cdata=course_data)
 
 #Generate schedule page
 @app.route("/gen_schedule", methods=['POST', 'GET'])
@@ -57,6 +57,7 @@ def gen_schedule():
     return render_template("Generate-a-Schedule.html", reqs=reqnames, timec=tc, reqc=rc)
 
 #Homepage
+@app.route("/", methods=['POST', 'GET'])
 @app.route("/home", methods=['POST', 'GET'])
 def home():
     netid = ""
@@ -64,6 +65,7 @@ def home():
         netid = session['netid']
 
     return render_template("Home.html", netid=netid)
+
 
 #Login button
 @app.route("/login", methods=['POST'])
