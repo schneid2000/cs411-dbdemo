@@ -12,7 +12,7 @@ def view_schedules():
     #assume we have some session variable called netid i guess
     data = request.get_json()
     course_data = []
-    if data not None and 'sid' in data:
+    if data is not None and 'sid' in data:
         schedule_id = data['sid']
         crns = db_helper.fetch_courses_by_schedule(schedule_id)
         for crn in crns:
@@ -24,8 +24,8 @@ def view_schedules():
         netid = session["netid"]
         student_schedules = db_helper.fetch_schedules(netid)
         friend_schedules = db_helper.fetch_friend_schedules(netid)
-      
-    return render_template("View_Schedules.html", sched=student_schedules, fsched=friend_schedules, cdata=course_data)
+
+    return render_template("View-Schedules.html", sched=student_schedules, fsched=friend_schedules, cdata=course_data)
 
 #Generate schedule page
 @app.route("/gen_schedule", methods=['POST', 'GET'])
@@ -40,20 +40,20 @@ def gen_schedule():
     #Display the current time constraints on the schedule
     data = request.get_json()
     tc = []
-    if data not None and 'sid' in data:
+    if data is not None and 'sid' in data:
         schedule_id = data['sid']
         tc = db_helper.fetch_time_constraints_by_schedule(schedule_id)
-    
+
     rc = []
     #Display the filtered search results
-    if data not None and 'req' in data:
+    if data is not None and 'req' in data:
         reqid = data['req']
         rc = db_helper.fetch_course_by_req(reqid)
         if 'filter_s' in data:
             rc = db_helper.filter_courses_by_subject(rc, data['filter_s'])
         if 'filter_t' in data:
             rc = db_helper.filter_courses_by_title(rc, data['filter_t'])
-    
+
     return render_template("Generate-a-Schedule.html", reqs=reqnames, timec=tc, reqc=rc)
 
 #Homepage

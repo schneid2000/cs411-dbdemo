@@ -1,0 +1,21 @@
+runtime: python39
+
+# [START handlers]
+
+
+instance_class: F1
+
+env_variables:
+  MYSQL_USER: 'root'
+  MYSQL_PASSWORD: '12345'
+  MYSQL_DB: 'mercury_scheduler'
+  MYSQL_HOST: 104.154.136.67
+
+
+
+handlers:
+- url: /script
+  static_dir: static/script
+
+- url: /styles
+  static_dir: static/styles
