@@ -4,6 +4,7 @@ from app import app
 from app import database as db_helper
 
 #Something about session data
+#View schedule page
 @app.route("/view_schedule", methods=['POST', 'GET'])
 def view_schedules():
     print("view_schedules page")
@@ -23,6 +24,7 @@ def view_schedules():
       
     return render_template("View_Schedules.html", sched=student_schedules, fsched=friend_schedules, cdata=course_data)
 
+#Generate schedule page
 @app.route("/gen_schedule", methods=['POST', 'GET'])
 def gen_schedule():
     print("gen schedule page")
@@ -49,6 +51,7 @@ def gen_schedule():
     
     return render_template("Generate-a-Schedule.html", reqs=reqnames, timec=tc, reqc=rc)
 
+#Homepage
 @app.route("/home", methods=['POST', 'GET'])
 def home():
     netid = ""
@@ -84,6 +87,29 @@ def login():
                 result = {'success': True, 'response': 'Successfully logged in'}
 
     return jsonify(result)
+
+#Set favorite schedule
+@app.route("/setfav", methods=['POST'])
+def setfav():
+    result = {'success': False, 'response': 'setfav unsuccessful'}
+    data = request.get_json()
+    netid = session['netid']
+    if 'sid' in data:
+        schedule_id = data['sid']
+        set_favorite_schedule(netid, schedule_id)
+        result = {'success': True, 'response': 'setfav successful'}
+
+    return jsonify(result)
+
+#Generate and link schedule button
+@app.route("/new_schedule", methods=['POST'])
+def create_schedule():
+    result = {'success': False, 'response': 'create schedule unsuccessful'}
+    netid = session['netid']
+    create_schedule(netid)
+    result = {'success': True, 'response': 'create schedule successful'}
+    return jsonify(result)
+
 
 
 

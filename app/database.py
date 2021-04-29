@@ -83,6 +83,21 @@ def set_favorite_schedule(netid, scheduleid):
     query_results = conn.execute(query).fetchall()
     conn.close()
     return True
+
+def create_schedule(netid):
+    if not safe_input(netid):
+        print("not safe input (create_schedule)")
+        return False
+    conn = db.connect()
+    query = 'SELECT MAX(ScheduleID) FROM Schedule ORDER BY ScheduleID'
+    query_results = conn.execute(query).fetchall()
+    max_val = int(query_results[0][0])
+    new_val = max_val + 1
+    query = 'INSERT INTO Schedule (ScheduleID, Student) VALUES ({}, "{}")'.format(new_val, netid)
+    conn.execute(query)
+    conn.close()
+
+    return True
     
 def link_schedule(netid, scheduleid):
     if not safe_input(netid) or not safe_input(scheduleid):
