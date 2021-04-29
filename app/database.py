@@ -25,6 +25,23 @@ def verify_login(username, password):
 
     return False
 
+def verify_hashed_login(username, hashed_pass):
+    conn = db.connect()
+    if not safe_input(username):
+        return False
+    query = 'SELECT Password FROM Student WHERE NetID = "{}";'.format(username)
+    query_results = conn.execute(query).fetchall()
+    conn.close()
+    #Would be a weird issue, but return none to be safe if duplicates
+    if len(query_results) != 1:
+        return False
+
+    password = query_results[0]
+    if hashed_pass == password:
+        return True
+
+    return False
+
 
 #Returns true if the input contains 0 unsafe chars, false otherwise
 def safe_input(input):

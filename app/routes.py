@@ -57,6 +57,34 @@ def home():
 
     return render_template("Home.html", netid=netid)
 
+#Login button
+@app.route("/login", methods=['POST'])
+def login():
+    result = {'success': False, 'response': 'Login unsuccessful'}
+    data = request.get_json()
+    if 'netid' in data and 'pw' in data:
+        #Should be the hashed password, probably
+        netid = data['netid']
+        hashed_pass = data['pw']
+        #Check if student in db
+        existence = is_student_in_db(netid)
+        if not existence:
+            #Create user and login
+            major = data['mj']
+            creation_status = create_user(netid, major, password)
+            if creation_status == True:
+                session['netid'] = netid
+                result = {'success': True, 'response': 'Successfully created account'}
+
+        else:
+            #Attempt login
+            login_status = verify_hashed_login(netid, hashed_pass)
+            if login_status == True:
+                session['netid'] = netid
+                result = {'success': True, 'response': 'Successfully logged in'}
+
+    return jsonify(result)
+
 
 
 #STAGE 4 DEPRECATED  BELOW
