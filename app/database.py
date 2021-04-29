@@ -393,6 +393,59 @@ def fetch_courses_by_schedule(scheduleid):
         results.append(course)
     return results
 
+#Get the requirements associated with the major of the student with the netid
+def fetch_reqs_by_netid(netid):
+    if not safe_input(netid):
+        print("not safe input (fetch_reqs_by_netid)")
+        return None
+
+    conn = db.connect()
+    query = 'SELECT Name FROM Requirement, SELECT ReqID FROM InternalMajorReqs WHERE Major = (SELECT Major FROM Student WHERE NetID = "{}") as temp WHERE ReqID in temp'.format(netid)
+    query_results = conn.execute(query).fetchall()
+    conn.close()
+    results = []
+    for result in query_results:
+        name = {
+            "name": result[0]
+        }
+        results.append(name)
+    return results
+
+def fetch_time_constraints_by_schedule(scheduleid):
+    if not safe_input(scheduleid):
+        print("not safe input (fetch_time_constraints_by_schedule)")
+        return None
+    
+    conn = db.connect()
+    query = 'SELECT ConstraintID, StartTime, EndTime FROM Constraints WHERE ScheduleID = {}'.format(scheduleid)
+    query_results = conn.execute(query).fetchall()
+    conn.close()
+    results = []
+    for result in query_results:
+        cid = result[0]
+        stime = result[1]
+        etime = result[2]
+        tcstr = str(stime) + "-" + str(etime)
+        results.append(tcstr)
+    return results
+
+def fetch_course_by_req(reqid):
+    if not safe_input(reqid):
+        print("not safe input (fetch_req_by_id)")
+        return None
+    
+    conn = db.connect()
+    query = 'SELECT CRN FROM CourseReqs WHERE ReqID = {}'.format(reqid)
+    query_results = conn.execute(query).fetchall()
+    conn.close()
+    results = []
+    for result in query_results:
+        course = {
+            "crn": result[0]
+        }
+        results.append(course)
+    return results
+
 #STAGE 4 DEPRECATED BELOW
 #--------------------------------------------------------
 # def fetch_reqs_by_name(reqname) -> dict:
