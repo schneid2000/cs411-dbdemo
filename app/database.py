@@ -29,6 +29,9 @@ def verify_login(username, password):
 #Returns true if the input contains 0 unsafe chars, false otherwise
 def safe_input(input):
     unsafe_chars = ["'", '"', '/', '#', ';']
+    if type(input) != str:
+        return True
+
     for val in input:
         if val in unsafe_chars:
             return False
@@ -226,10 +229,169 @@ def validate_major(major):
     conn = db.connect()
     query = 'SELECT * FROM MajorRequirements WHERE Major = "{}"'.format(major)
     query_results = conn.execute(query).fetchall()
+    conn.close()
     if len(query_results) == 0:
         return False
 
     return True
+
+#Fetch the CRNs associated with a given requirement
+def show_req_courses(reqid):
+    if not safe_input(reqid):
+        print("reqid was not safe (show_req_courses)")
+        return None
+    
+    conn = db.connect()
+    query = 'SELECT CRN FROM CourseReqs WHERE ReqID = {}'.format(reqid)
+    query_results = conn.excute(query).fetchall()
+    conn.close()
+    results = []
+    for result in query_results:
+        course = {
+            "crn": result[0]
+        }
+        results.append(course)
+    return results
+
+
+#Fetch relevant course details given a crn
+#This will probably break because of how numbers work in mysql
+def show_details_by_crn(crn):
+    if not safe_input(crn):
+        print("crn was not safe (show_details_by_crn)")
+        return None
+    
+    conn = db.connect()
+    query = 'SELECT CRN, Subject, Number, Title, Type, Section, Time, EndTime, Days, Location FROM Class WHERE CRN = {}'.format(crn)
+    query_results = conn.execute(query).fetchall()
+    conn.close()
+    results = []
+    for result in query_results:
+        course_details = {
+            "crn": result[0],
+            "class": result[1] + " " + str(result[2]),
+            "title": result[3],
+            "type": result[4],
+            "section": result[5],
+            "time": str(result[6]) + "-" + str(result[7]),
+            "day": result[8],
+            "location": result[9]
+        }
+        results.append(course_details)
+    return results
+
+
+def debug_query_results(query_results):
+    print("This query returned", len(query_results), "rows")
+
+#Create a new time constraint
+def create_time_constraint(scheduleid, constraintid, start_time, end_time):
+    if not safe_input(start_time) or not safe_input(end_time):
+        print("start_time or end_time were not safe (create_time_constraint)")
+        return False
+    
+    conn = db.connect()
+    query = 'INSERT INTO Constraints (ConstraintID, ScheduleID, StartTime, EndTime, Days) VALUES ({}, {}, {}, {}, "MTWRF")'.format(constraintid, scheduleid, start_time, end_time)
+    query_results = conn.execute(query).fetchall()
+    conn.close()
+    
+    return True
+
+def delete_time_constraint(scheduleid, constraintid):
+    if not safe_input(scheduleid) or not safe_input(constraintid):
+        print("Not safe input (delete_time_constraint)")
+        return False
+
+    conn = db.connect()
+    query = 'DELETE FROM Constraints WHERE ConstraintID = {} AND ScheduleID = {}'.format(constraintid, scheduleid)
+    query_results = conn.execute(query).fetchall()
+    conn.close()
+
+    return True
+
+#Filter out courses by a searched phrase in the title
+def filter_courses_by_title(prev_results, filter_substring):
+    results = []
+    for prev_result in prev_results:
+        if "title" not in prev_result:
+            print("title not found in previous result object")
+            return None
+
+        course_title = prev_result["title"]
+        if filter_substring.lower() in course_title.lower():
+            results.append(prev_result)
+
+    return results
+
+#Filter out courses by a given subject
+def filter_courses_by_subject(prev_results, subject):
+    results = []
+    for prev_result in prev_results:
+        if "class" not in prev_result:
+            print("class not found in previous result object")
+            return None
+
+        course = prev_result["class"]
+        if subject.lower() in course.lower():
+            results.append(prev_result)
+
+    return results
+
+#Fetch schedules
+def fetch_schedules(netid):
+    if not safe_input(netid):
+        print("not safe input (fetch_schedules)")
+        return None
+
+    conn = db.connect()
+    query = 'SELECT ScheduleName, IsFavorite, TotalCredits FROM Schedule WHERE Student = "{}"'.format(netid)
+    query_results = conn.execute(query).fetchall()
+    conn.close()
+    results = []
+    for result in query_results:
+        schedule_data = {
+            "name": result[0],
+            "is_favorite": result[1],
+            "total_credits": result[2]
+        }
+        results.append(schedule_data)
+    return results
+
+
+def fetch_friend_schedules(netid):
+    if not safe_input(netid):
+        print("not safe input (fetch_schedules)")
+        return None
+
+    conn = db.connect()
+    query = 'SELECT ScheduleName, TotalCredits FROM Schedule, SELECT FriendsWithNetID From Friends WHERE FriendNetID = "{}" AS temp WHERE Student IN temp'.format(netid)
+    query_results = conn.execute(query).fetchall()
+    conn.close()
+    results = []
+    for result in query_results:
+        schedule_data = {
+            "name": result[0],
+            "total_credits": result[1]
+        }
+        results.append(schedule_data)
+    return results
+
+#Get the crns associated with a given schedule
+def fetch_courses_by_schedule(scheduleid):
+    if not safe_input(scheduleid):
+        print("not safe input (fetch_courses_by_schedule)")
+        return None
+
+    conn = db.connect()
+    query = 'SELECT CRN FROM WithinSchedule WHERE ScheduleID = {}'.format(scheduleid)
+    query_results = conn.execute(query).fetchall()
+    results = []
+    for result in query_results:
+        course = {
+            "crn": result[0]
+        }
+        results.append(course)
+    return results
 
 #STAGE 4 DEPRECATED BELOW
 #--------------------------------------------------------
