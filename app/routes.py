@@ -57,6 +57,7 @@ def gen_schedule():
     return render_template("Generate-a-Schedule.html", reqs=reqnames, timec=tc, reqc=rc)
 
 #Homepage
+@app.route("/", methods=['POST', 'GET'])
 @app.route("/home", methods=['POST', 'GET'])
 def home():
     netid = ""
@@ -64,6 +65,7 @@ def home():
         netid = session['netid']
 
     return render_template("Home.html", netid=netid)
+
 
 #Login button
 @app.route("/login", methods=['POST'])
