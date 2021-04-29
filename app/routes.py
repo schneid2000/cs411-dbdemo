@@ -12,15 +12,18 @@ def view_schedules():
     #assume we have some session variable called netid i guess
     data = request.get_json()
     course_data = []
-    if 'sid' in data:
+    if data not None and 'sid' in data:
         schedule_id = data['sid']
         crns = db_helper.fetch_courses_by_schedule(schedule_id)
         for crn in crns:
             course_data.append(db_helper.show_details_by_crn(crn))
 
-    netid = session["netid"]
-    student_schedules = db_helper.fetch_schedules(netid)
-    friend_schedules = db_helper.fetch_friend_schedules(netid)
+    student_schedules = []
+    friend_schedules = []
+    if "netid" in session:
+        netid = session["netid"]
+        student_schedules = db_helper.fetch_schedules(netid)
+        friend_schedules = db_helper.fetch_friend_schedules(netid)
       
     return render_template("View_Schedules.html", sched=student_schedules, fsched=friend_schedules, cdata=course_data)
 
@@ -30,24 +33,26 @@ def gen_schedule():
     print("gen schedule page")
     #Display major reqs, time constraints, and resulting searches
     #Retrieve the requirements attached to the major of the student
-    netid = session['netid']
-    reqnames = fetch_reqs_by_netid(netid)
+    reqnames = []
+    if 'netid' in session:
+        netid = session['netid']
+        reqnames = db_helper.fetch_reqs_by_netid(netid)
     #Display the current time constraints on the schedule
     data = request.get_json()
     tc = []
-    if 'sid' in data:
+    if data not None and 'sid' in data:
         schedule_id = data['sid']
-        tc = fetch_time_constraints_by_schedule(schedule_id)
+        tc = db_helper.fetch_time_constraints_by_schedule(schedule_id)
     
     rc = []
     #Display the filtered search results
-    if 'req' in data:
+    if data not None and 'req' in data:
         reqid = data['req']
-        rc = fetch_course_by_req(reqid)
+        rc = db_helper.fetch_course_by_req(reqid)
         if 'filter_s' in data:
-            rc = filter_courses_by_subject(rc, data['filter_s'])
+            rc = db_helper.filter_courses_by_subject(rc, data['filter_s'])
         if 'filter_t' in data:
-            rc = filter_courses_by_title(rc, data['filter_t'])
+            rc = db_helper.filter_courses_by_title(rc, data['filter_t'])
     
     return render_template("Generate-a-Schedule.html", reqs=reqnames, timec=tc, reqc=rc)
 
@@ -70,18 +75,18 @@ def login():
         netid = data['netid']
         hashed_pass = data['pw']
         #Check if student in db
-        existence = is_student_in_db(netid)
+        existence = db_helper.is_student_in_db(netid)
         if not existence:
             #Create user and login
             major = data['mj']
-            creation_status = create_user(netid, major, password)
+            creation_status = db_helper.create_user(netid, major, password)
             if creation_status == True:
                 session['netid'] = netid
                 result = {'success': True, 'response': 'Successfully created account'}
 
         else:
             #Attempt login
-            login_status = verify_hashed_login(netid, hashed_pass)
+            login_status = db_helper.verify_hashed_login(netid, hashed_pass)
             if login_status == True:
                 session['netid'] = netid
                 result = {'success': True, 'response': 'Successfully logged in'}
@@ -96,7 +101,7 @@ def setfav():
     netid = session['netid']
     if 'sid' in data:
         schedule_id = data['sid']
-        set_favorite_schedule(netid, schedule_id)
+        db_helper.set_favorite_schedule(netid, schedule_id)
         result = {'success': True, 'response': 'setfav successful'}
 
     return jsonify(result)
@@ -106,11 +111,50 @@ def setfav():
 def create_schedule():
     result = {'success': False, 'response': 'create schedule unsuccessful'}
     netid = session['netid']
-    create_schedule(netid)
+    db_helper.create_schedule(netid)
     result = {'success': True, 'response': 'create schedule successful'}
     return jsonify(result)
 
 
+#Add friend to pending friends list
+@app.route("/add_friend", methods=['POST'])
+def add_friend():
+    result = {'success': False, 'response': 'pending friend unsuccessful'}
+    data = request.get_json()
+    netid = session['netid']
+    if 'friend' in data:
+        friendid = data['friend']
+        db_helper.add_pending_friend(netid, friendid)
+        db_helper.eval_friend_request(netid, friendid)
+        result = {'success': True, 'response': 'pending friend successful'}
+
+    return jsonify(result)
+
+#Add course taken to the netid
+@app.route("/course_taken", methods=['POST'])
+def add_course_taken():
+    result = {'success': False, 'response': 'add course taken unsuccessful'}
+    data = request.get_json()
+    netid = session['netid']
+    if 'course' in data:
+        crn = data['course']
+        db_helper.add_course_taken(netid, crn)
+        result = {'success': True, 'response': 'add course taken successful'}
+
+    return jsonify(result)
+
+#Add course to schedule
+@app.route("/add_to_schedule", methods=['POST'])
+def add_to_schedule():
+    result = {'success': False, 'response': 'add course taken unsuccessful'}
+    data = request.get_json()
+    if 'course' in data and 'sid' in data:
+        sid = data['sid']
+        crn = data['course']
+        db_helper.add_course_to_schedule(sid, crn)
+        result = {'success': True, 'response': 'add course taken successful'}
+
+    return jsonify(result)
 
 
 #STAGE 4 DEPRECATED  BELOW
