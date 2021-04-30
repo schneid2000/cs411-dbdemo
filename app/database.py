@@ -468,6 +468,17 @@ def fetch_schedules(netid):
         results.append(schedule_data)
     return results
 
+def fetch_total_credits(schedule_id):
+    if not safe_input(schedule_id):
+        print("not safe intpue (schedule_id)")
+        return None
+
+    conn = db.connect()
+    query = 'SELECT TotalCredits FROM Schedule WHERE ScheduleID = {}'.format(schedule_id)
+    query_results = conn.execute(query).fetchall()
+    conn.close()
+    return query_results[0][0]
+
 def find_schedule(netid, sname):
     if not safe_input(netid) or not safe_input(sname):
         print("Not safe input (find_schedule)")

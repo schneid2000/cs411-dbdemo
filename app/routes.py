@@ -14,6 +14,7 @@ def view_schedules(schedule_id=None):
     data = request.get_json()
     course_data = []
     viewingName = ""
+    totalCredits = 0
     if schedule_id is not None:
         crns = db_helper.fetch_courses_by_schedule(schedule_id)
         for crn in crns:
@@ -21,8 +22,11 @@ def view_schedules(schedule_id=None):
 
         scheduleName = db_helper.get_schedule_name(schedule_id)
 
+        totalCredits = db_helper.fetch_total_credits(schedule_id)
+
         if len(scheduleName) > 0 and len(scheduleName[0]) > 0:
             viewingName = scheduleName[0][0]
+
 
         print("COURSE DATA")
         print(course_data)
@@ -34,10 +38,32 @@ def view_schedules(schedule_id=None):
         student_schedules = db_helper.fetch_schedules(netid)
         friend_schedules = db_helper.fetch_friend_schedules(netid)
 
+    sorted_course_data = []
+    for i in range(5):
+        sorted_course_data.append([])
 
+    for course in course_data:
+        split = course['time'].split('-')
+        course['start_time'] = int(split[0])
+        course['end_time'] = int(split[1])
 
+        if 'M' in course['day']:
+            sorted_course_data[0].append(course)
+        if 'T' in course['day']:
+            sorted_course_data[1].append(course)
+        if 'W' in course['day']:
+            sorted_course_data[2].append(course)
+        if 'R' in course['day']:
+            sorted_course_data[3].append(course)
+        if 'F' in course['day']:
+            sorted_course_data[4].append(course)
 
-    return render_template("View-Schedules.html", sched=student_schedules[:9], fsched=friend_schedules, cdata=course_data, viewName=viewingName)
+    hour_sorted_course_data = []
+    for i in range(len(sorted_course_data)):
+        newDay = sorted(sorted_course_data[i], key = lambda i: i['start_time'])
+        hour_sorted_course_data.append(newDay)
+
+    return render_template("View-Schedules.html", sched=student_schedules[:9], fsched=friend_schedules, cdata=course_data, viewID=schedule_id, viewName=viewingName, sortedCData=hour_sorted_course_data, tCredits=totalCredits)
 
 @app.route("/delete:<schedule_id>:<crn>", methods=['POST', 'GET'])
 def delete_class_from_schedule(schedule_id=None, crn=None):
