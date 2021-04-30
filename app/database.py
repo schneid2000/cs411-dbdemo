@@ -339,14 +339,17 @@ def debug_query_results(query_results):
     print("This query returned", len(query_results), "rows")
 
 #Create a new time constraint
-def create_time_constraint(scheduleid, constraintid, start_time, end_time):
+def create_time_constraint(scheduleid, start_time, end_time):
     if not safe_input(start_time) or not safe_input(end_time):
         print("start_time or end_time were not safe (create_time_constraint)")
         return False
 
     conn = db.connect()
+    query = 'SELECT MAX(ConstraintID) FROM Constraints'
+    query_result = conn.execute(query).fetchall()
+    constraintid = query_result[0][0] + 1
     query = 'INSERT INTO Constraints (ConstraintID, ScheduleID, StartTime, EndTime, Days) VALUES ({}, {}, {}, {}, "MTWRF")'.format(constraintid, scheduleid, start_time, end_time)
-    query_results = conn.execute(query).fetchall()
+    conn.execute(query)
     conn.close()
 
 
@@ -359,7 +362,7 @@ def delete_time_constraint(scheduleid, constraintid):
 
     conn = db.connect()
     query = 'DELETE FROM Constraints WHERE ConstraintID = {} AND ScheduleID = {}'.format(constraintid, scheduleid)
-    query_results = conn.execute(query).fetchall()
+    conn.execute(query)
     conn.close()
 
     return True
@@ -413,6 +416,20 @@ def fetch_schedules(netid):
         results.append(schedule_data)
     return results
 
+def find_schedule(netid, sname):
+    if not safe_input(netid) or not safe_input(sname):
+        print("Not safe input (find_schedule)")
+        return None
+    
+    conn = db.connect()
+    query = 'SELECT ScheduleID FROM Schedule WHERE Student = "{}" AND ScheduleName = "{}"'.format(netid, sname)
+    query_results = conn.execute(query).fetchall()
+    conn.close()
+
+    if len(query_results) == 0:
+        return None
+
+    return query_results[0][0]
 
 def fetch_friend_schedules(netid):
     if not safe_input(netid):
@@ -485,7 +502,12 @@ def fetch_time_constraints_by_schedule(scheduleid):
         stime = result[1]
         etime = result[2]
         tcstr = str(stime) + "-" + str(etime)
-        results.append(tcstr)
+        final = {
+            "id": cid,
+            "str": tcstr
+        }
+
+        results.append(final)
     return results
 
 def fetch_course_by_req(reqid):

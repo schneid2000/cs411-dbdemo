@@ -96,6 +96,69 @@ $(document).ready(function () {
         });
     });
 
+    $('#submit-edit-schedule').click(function () {
+        console.log("Edit schedule button clicked!")
+        schedulename = $('.edit-form-schedule').val()
+        console.log(schedulename)
+        $.ajax({
+            type: 'POST',
+            url: '/edit_schedule',
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify({
+                'sname':schedulename
+            }),
+            success: function (res) {
+                console.log(res.response)
+                location.reload();
+            },
+            error: function () {
+                console.log('Error');
+            }
+        });
+    });
+
+    $('#create-constraint').click(function (event) {
+        console.log("create constraint button")
+        start_time = $('.constraint-start-time').val()
+        end_time = $('.constraint-end-time').val()
+        $.ajax({
+            type: 'POST',
+            url: '/add_constraint',
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify({
+                'stime':start_time,
+                'etime':end_time
+            }),
+            success: function (res) {
+                console.log(res.response)
+                location.reload();
+            },
+            error: function () {
+                console.log('Error');
+            }
+        });
+    });
+
+    $('.delete-time-constraint').click(function (event) {
+        console.log("delete constraint button")
+        cid = $(this).data('id')
+        $.ajax({
+            type: 'POST',
+            url: '/delete_constraint',
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify({
+                'constraintid': cid
+            }),
+            success: function (res) {
+                console.log(res.response)
+                location.reload();
+            },
+            error: function () {
+                console.log('Error');
+            }
+        });
+    });
+
     $('#select-major-req').click(function (event) {
         console.log("Select major req button")
         reqid = $(this).data('id')

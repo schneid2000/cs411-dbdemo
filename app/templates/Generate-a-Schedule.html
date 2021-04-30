@@ -67,11 +67,9 @@
                 </div>
               </div>
               <div class="u-container-style u-layout-cell u-size-30 u-layout-cell-2">
-                <div class="input-group mb-3">
-                  <input type="text" class="gen-form-schedule" placeholder="Schedule Name" aria-label="schedule-name" aria-describedby="basic-addon1">
-                </div>
                 <div class="u-container-layout u-valign-middle u-container-layout-2">
-                  <a href="https://nicepage.com/c/text-website-templates" class="u-btn u-btn-round u-button-style u-custom-color-1 u-hover-custom-color-2 u-radius-6 u-btn-1">Generate Schedule</a>
+                  <input type="text" class="gen-form-schedule" placeholder="Schedule Name" aria-label="schedule-name" aria-describedby="basic-addon1">
+                  <button id="submit-gen-schedule" class="u-btn u-btn-round u-button-style u-custom-color-1 u-hover-custom-color-2 u-radius-6 u-btn-1">Generate Schedule</button>
                 </div>
               </div>
             </div>
@@ -88,7 +86,8 @@
               </div>
               <div class="u-container-style u-layout-cell u-size-30 u-layout-cell-4">
                 <div class="u-container-layout u-valign-middle u-container-layout-4">
-                  <a href="https://nicepage.com/k/awards-website-templates" class="u-align-center u-btn u-btn-round u-button-style u-custom-color-1 u-hover-custom-color-2 u-radius-6 u-btn-2">Edit Schedule</a>
+                  <input type="text" class="edit-form-schedule" placeholder="Schedule Name" aria-label="schedule-name" aria-describedby="basic-addon1">
+                  <button id="submit-edit-schedule" class="u-align-center u-btn u-btn-round u-button-style u-custom-color-1 u-hover-custom-color-2 u-radius-6 u-btn-2">Edit Schedule</button>
                 </div>
               </div>
             </div>
@@ -130,7 +129,13 @@
                 <div class="u-container-layout u-container-layout-2">
                   <h5 class="u-align-center u-text u-text-3">Create a <b>Time Constraint</b>&nbsp;that you don't want classes to fall into. Current <b>Time Constraints</b>&nbsp;are listed below.
                   </h5>
-                  <a href="https://nicepage.com/k/clothing-store-website-templates" class="u-btn u-btn-round u-button-style u-custom-color-1 u-hover-custom-color-2 u-radius-6 u-btn-6">Create Time Constraint</a>
+                  <div class="input-group mb-3">
+                    <input type="text" class="constraint-start-time" placeholder="Start Time" aria-label="starttime" aria-describedby="basic-addon1">
+                  </div>
+                  <div class="input-group mb-3">
+                    <input type="text" class="constraint-end-time" placeholder="End Time" aria-label="endtime" aria-describedby="basic-addon1">
+                  </div>
+                  <button id="create-constraint" class="u-btn u-btn-round u-button-style u-custom-color-1 u-hover-custom-color-2 u-radius-6 u-btn-6">Create Time Constraint</button>
                   <div class="u-table u-table-responsive u-table-2">
                     <table class="u-table-entity">
                       <colgroup>
@@ -138,56 +143,14 @@
                         <col width="13.2%">
                       </colgroup>
                       <tbody class="u-table-body">
+                        {% for t in timec %}
                         <tr style="height: 48px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">[Time Constraint]</td>
+                          <td class="u-border-1 u-border-grey-30 u-table-cell">{{t.str}}</td>
                           <td class="u-border-1 u-border-grey-30 u-table-cell">
-                            <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-7" href="https://nicepage.com">Delete</a>
+                            <button class="delete-time-constraint u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-7" data-id={{t.id}}>Delete</button>
                           </td>
                         </tr>
-                        <tr style="height: 33px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">[Time Constraint]</td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">
-                            <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-8" href="https://nicepage.com">Delete</a>
-                          </td>
-                        </tr>
-                        <tr style="height: 48px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">[Time Constraint]</td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">
-                            <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-9" href="https://nicepage.com">Delete</a>
-                          </td>
-                        </tr>
-                        <tr style="height: 48px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">[Time Constraint]</td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">
-                            <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-10" href="https://nicepage.com">Delete</a>
-                          </td>
-                        </tr>
-                        <tr style="height: 48px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">[Time Constraint]</td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">
-                            <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-11" href="https://nicepage.com">Delete</a>
-                          </td>
-                        </tr>
-                        <tr style="height: 48px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                        </tr>
-                        <tr style="height: 48px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                        </tr>
-                        <tr style="height: 48px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                        </tr>
-                        <tr style="height: 48px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                        </tr>
-                        <tr style="height: 48px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                        </tr>
+                        {% endfor %}
                       </tbody>
                     </table>
                   </div>

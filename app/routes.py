@@ -90,6 +90,37 @@ def home():
     return render_template("Home.html", netid=netid)
 
 
+#Add constraint button
+@app.route("/add_constraint", methods=['POST'])
+def add_constraint():
+    print("adding constraint")
+    result = {'success': False, 'response': 'create constraint unsuccessful'}
+    data = request.get_json()
+    if 'stime' in data and 'etime' in data:
+        stime = int(data['stime'])
+        etime = int(data['etime'])
+        if 'sid' in session:
+            scheduleid = session['sid']
+            db_helper.create_time_constraint(scheduleid, stime, etime)
+            result = {'success': True, 'response': 'create constraint successful'}
+
+    return jsonify(result)
+
+#Delete constraint button
+@app.route("/delete_constraint", methods=['POST'])
+def delete_constraint():
+    print("deleting constraint")
+    result = {'success': False, 'response': 'delete constraint unsuccessful'}
+    data = request.get_json()
+    if 'constraintid' in data:
+        constraintid = data['constraintid']
+        if 'sid' in session:
+            scheduleid = session['sid']
+            db_helper.delete_time_constraint(scheduleid, constraintid)
+            result = {'success': True, 'response': 'delete constraint successful'}
+
+    return jsonify(result)
+
 #Login button
 @app.route("/login", methods=['POST'])
 def login():
@@ -144,6 +175,18 @@ def create_schedule():
         netid = session['netid']
         session['sid'] = db_helper.create_schedule(netid, sname)
         result = {'success': True, 'response': 'create schedule successful'}
+
+    return jsonify(result)
+
+@app.route("/edit_schedule", methods=['POST'])
+def edit_schedule():
+    result = {'success': False, 'response': 'edit schedule unsuccessful'}
+    data = request.get_json()
+    if 'sname' in data:
+        sname = data['sname']
+        netid = session['netid']
+        session['sid'] = db_helper.find_schedule(netid, sname)
+        result = {'success': True, 'response': 'edit schedule successful'}
 
     return jsonify(result)
 
