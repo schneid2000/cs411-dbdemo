@@ -25,8 +25,9 @@ def view_schedules():
         student_schedules = db_helper.fetch_schedules(netid)
         friend_schedules = db_helper.fetch_friend_schedules(netid)
 
-    print(student_schedules)
+
     return render_template("View-Schedules.html", sched=student_schedules[:9], fsched=friend_schedules, cdata=course_data, test="tester")
+
 
 #Generate schedule page
 @app.route("/gen_schedule", methods=['POST', 'GET'])
@@ -41,21 +42,34 @@ def gen_schedule():
     #Display the current time constraints on the schedule
     data = request.get_json()
     tc = []
-    if data is not None and 'sid' in data:
-        schedule_id = data['sid']
+    if 'sid' in session:
+        schedule_id = session['sid']
         tc = db_helper.fetch_time_constraints_by_schedule(schedule_id)
 
     rc = []
     #Display the filtered search results
     if data is not None and 'req' in data:
         reqid = data['req']
-        rc = db_helper.fetch_course_by_req(reqid)
+        session['req'] = reqid
         if 'filter_s' in data:
-            rc = db_helper.filter_courses_by_subject(rc, data['filter_s'])
+            session['filter_s'] = data['filter_s']
         if 'filter_t' in data:
-            rc = db_helper.filter_courses_by_title(rc, data['filter_t'])
+            session['filter_t'] = data['filter_t']
 
-    return render_template("Generate-a-Schedule.html", reqs=reqnames, timec=tc, reqc=rc)
+
+    if 'req' in session:
+        print(session['req'])
+        rc = db_helper.fetch_course_by_req(session['req'])
+        if 'filter_s' in session:
+            rc = db_helper.filter_courses_by_subject(rc, session['filter_s'])
+        if 'filter_t' in session:
+            rc = db_helper.filter_courses_by_title(rc, session['filter_t'])
+
+    rce = []
+    for entry in rc:
+        rce.append(db_helper.show_details_by_crn(entry))
+    print(rce)
+    return render_template("Generate-a-Schedule.html", reqs=reqnames, timec=tc, reqc=rce)
 
 #Homepage
 @app.route("/", methods=['POST', 'GET'])
@@ -117,9 +131,13 @@ def setfav():
 @app.route("/new_schedule", methods=['POST'])
 def create_schedule():
     result = {'success': False, 'response': 'create schedule unsuccessful'}
-    netid = session['netid']
-    db_helper.create_schedule(netid)
-    result = {'success': True, 'response': 'create schedule successful'}
+    data = request.get_json()
+    if 'sname' in data:
+        sname = data['sname']
+        netid = session['netid']
+        session['sid'] = db_helper.create_schedule(netid, sname)
+        result = {'success': True, 'response': 'create schedule successful'}
+
     return jsonify(result)
 
 

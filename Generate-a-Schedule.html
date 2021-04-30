@@ -55,37 +55,21 @@
       </div></header>
     <section class="u-clearfix u-section-1" id="sec-1849">
       <div class="u-clearfix u-sheet u-sheet-1">
-        <h2 class="u-align-center u-text u-text-1">Step 1: Select an existing <b>Schedule</b>&nbsp;or generate a new one.
-        </h2>
         <div class="u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
           <div class="u-layout">
             <div class="u-layout-row">
               <div class="u-container-style u-layout-cell u-size-30 u-layout-cell-1">
                 <div class="u-container-layout u-valign-middle u-container-layout-1">
-                  <h5 class="u-align-center u-text u-text-2">Click <i>Generate Schedule</i>&nbsp;to create a new <b>Schedule</b>. Input a <b>Schedule Name</b>, and we will generate a new unique <b>Schedule ID</b>.
-                  </h5>
+                  <h2 class="u-align-center u-text u-text-1">Step 1: Click the button on the right to give your new schedule a <b>Name</b>&nbsp;and generate a new unique <b>Schedule ID</b>.
+                  </h2>
                 </div>
               </div>
               <div class="u-container-style u-layout-cell u-size-30 u-layout-cell-2">
                 <div class="u-container-layout u-valign-middle u-container-layout-2">
-                  <a href="https://nicepage.com/c/text-website-templates" class="u-btn u-btn-round u-button-style u-custom-color-1 u-hover-custom-color-2 u-radius-6 u-btn-1">Generate Schedule</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-2">
-          <div class="u-layout">
-            <div class="u-layout-row">
-              <div class="u-container-style u-layout-cell u-size-30 u-layout-cell-3">
-                <div class="u-container-layout u-valign-middle u-container-layout-3">
-                  <h5 class="u-align-center u-text u-text-default u-text-3">Click <i>Edit Schedule</i>&nbsp;to add classes to an existing <b>Schedule</b>. Input the <b>Schedule ID</b>&nbsp;corresponding to the <b>Schedule</b>&nbsp;you want to edit. (This can be found on the <i>View Schedules</i>&nbsp;page.)
-                  </h5>
-                </div>
-              </div>
-              <div class="u-container-style u-layout-cell u-size-30 u-layout-cell-4">
-                <div class="u-container-layout u-valign-middle u-container-layout-4">
-                  <a href="https://nicepage.com/k/awards-website-templates" class="u-align-center u-btn u-btn-round u-button-style u-custom-color-1 u-hover-custom-color-2 u-radius-6 u-btn-2">Edit Schedule</a>
+                  <div class="input-group mb-3">
+                    <input type="text" class="gen-form-schedule" placeholder="Name" aria-label="gen-schedule" aria-describedby="basic-addon1">
+                  </div>
+                  <button id="submit-gen-schedule" type="button" class="u-btn u-btn-round u-button-style u-custom-color-1 u-hover-custom-color-2 u-radius-6 u-btn-6">Generate Schedule</button>
                 </div>
               </div>
             </div>
@@ -112,9 +96,9 @@
                       <tbody class="u-table-body">
                         {% for req in reqs %}
                         <tr style="height: 48px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">{{req.name}}</td>
+                          <td class="u-border-1 u-border-grey-30 u-table-cell" data-id={{req.id}}>{{req.name}}</td>
                           <td class="u-border-1 u-border-grey-30 u-table-cell">
-                            <button id="select-major-req" class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-1" data-id={{req.id}}>Select</button>
+                            <button id="select-major-req" class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-1" href="https://nicepage.com">Select</button>
                           </td>
                         </tr>
                       {% endfor %}
@@ -240,23 +224,180 @@
               </tr>
             </thead>
             <tbody class="u-table-body">
-              {% for course in reqc %}
               <tr style="height: 28px;">
                 <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-10">
                   <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-1" href="https://nicepage.com">Mark as Taken</a>
                 </td>
                 <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-11">
-                  <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-2" href="https://nicepage.com">{{course.crn}}</a>
+                  <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-2" href="https://nicepage.com">[CRN]</a>
                 </td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell">{{course.class}}</td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell">{{course.title}}</td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell">{{course.type}}</td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell">{{course.section}}</td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell">{{course.time}}</td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell">{{course.day}}</td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell">{{course.location}}</td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
               </tr>
-            {% endfor %}
+              <tr style="height: 25px;">
+                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-19">
+                  <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-3" href="https://nicepage.com">Mark as Taken</a>
+                </td>
+                <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-20">
+                  <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-4" href="https://nicepage.com">[CRN]</a>
+                </td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+              </tr>
+              <tr style="height: 34px;">
+                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-28">
+                  <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-5" href="https://nicepage.com">Mark as Taken</a>
+                </td>
+                <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-29">
+                  <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-6" href="https://nicepage.com">[CRN]</a>
+                </td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+              </tr>
+              <tr style="height: 34px;">
+                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-37">
+                  <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-7" href="https://nicepage.com">Mark as Taken</a>
+                </td>
+                <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-38">
+                  <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-8" href="https://nicepage.com">[CRN]</a>
+                </td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+              </tr>
+              <tr style="height: 34px;">
+                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-46">
+                  <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-9" href="https://nicepage.com">Mark as Taken</a>
+                </td>
+                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-47">
+                  <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-10" href="https://nicepage.com">[CRN]</a>
+                </td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+              </tr>
+              <tr style="height: 34px;">
+                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-55"></td>
+                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-56"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+              </tr>
+              <tr style="height: 34px;">
+                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-64"></td>
+                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-65"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+              </tr>
+              <tr style="height: 34px;">
+                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-73"></td>
+                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-74"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+              </tr>
+              <tr style="height: 34px;">
+                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-82"></td>
+                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-83"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+              </tr>
+              <tr style="height: 34px;">
+                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-91"></td>
+                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-92"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+              </tr>
+              <tr style="height: 34px;">
+                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-100"></td>
+                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-101"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+              </tr>
+              <tr style="height: 34px;">
+                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-109"></td>
+                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-110"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+              </tr>
+              <tr style="height: 34px;">
+                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-118"></td>
+                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-119"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+              </tr>
+              <tr style="height: 34px;">
+                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-127"></td>
+                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-128"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+              </tr>
             </tbody>
           </table>
         </div>
