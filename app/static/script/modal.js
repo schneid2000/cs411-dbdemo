@@ -75,6 +75,48 @@ $(document).ready(function () {
         });
     });
 
+    $('#submit-gen-schedule').click(function () {
+        console.log("Button clicked!")
+        schedulename = $('.gen-form-schedule').val()
+        console.log(schedulename)
+        $.ajax({
+            type: 'POST',
+            url: '/new_schedule',
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify({
+                'sname':schedulename
+            }),
+            success: function (res) {
+                console.log(res.response)
+                location.reload();
+            },
+            error: function () {
+                console.log('Error');
+            }
+        });
+    });
+
+    $('#select-major-req').click(function (event) {
+        console.log("Select major req button")
+        reqid = $(this).data('id')
+        console.log(reqid)
+        $.ajax({
+            type: 'POST',
+            url: '/gen_schedule',
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify({
+                'req':reqid
+            }),
+            success: function (res) {
+                console.log(res.response)
+                location.reload();
+            },
+            error: function () {
+                console.log('Error');
+            }
+        });
+    });
+
     $('#submit-logout').click(function () {
         $.ajax({
             type: 'POST',

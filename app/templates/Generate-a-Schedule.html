@@ -110,56 +110,14 @@
                         <col width="13.2%">
                       </colgroup>
                       <tbody class="u-table-body">
+                        {% for req in reqs %}
                         <tr style="height: 48px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">[Major Req]</td>
+                          <td class="u-border-1 u-border-grey-30 u-table-cell">{{req.name}}</td>
                           <td class="u-border-1 u-border-grey-30 u-table-cell">
-                            <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-1" href="https://nicepage.com">Select</a>
+                            <button id="select-major-req" class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-1" data-id={{req.id}}>Select</button>
                           </td>
                         </tr>
-                        <tr style="height: 48px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">[Major Req]</td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">
-                            <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-2" href="https://nicepage.com">Select</a>
-                          </td>
-                        </tr>
-                        <tr style="height: 48px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">[Major Req]</td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">
-                            <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-3" href="https://nicepage.com">Select</a>
-                          </td>
-                        </tr>
-                        <tr style="height: 48px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">[Major Req]</td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">
-                            <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-4" href="https://nicepage.com">Select</a>
-                          </td>
-                        </tr>
-                        <tr style="height: 48px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">[Major Req]</td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">
-                            <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-5" href="https://nicepage.com">Select</a>
-                          </td>
-                        </tr>
-                        <tr style="height: 48px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                        </tr>
-                        <tr style="height: 48px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                        </tr>
-                        <tr style="height: 48px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                        </tr>
-                        <tr style="height: 48px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                        </tr>
-                        <tr style="height: 48px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                        </tr>
+                      {% endfor %}
                       </tbody>
                     </table>
                   </div>
@@ -282,180 +240,23 @@
               </tr>
             </thead>
             <tbody class="u-table-body">
+              {% for course in reqc %}
               <tr style="height: 28px;">
                 <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-10">
                   <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-1" href="https://nicepage.com">Mark as Taken</a>
                 </td>
                 <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-11">
-                  <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-2" href="https://nicepage.com">[CRN]</a>
+                  <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-2" href="https://nicepage.com">{{course.crn}}</a>
                 </td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell">{{course.class}}</td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell">{{course.title}}</td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell">{{course.type}}</td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell">{{course.section}}</td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell">{{course.time}}</td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell">{{course.day}}</td>
+                <td class="u-border-1 u-border-grey-30 u-table-cell">{{course.location}}</td>
               </tr>
-              <tr style="height: 25px;">
-                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-19">
-                  <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-3" href="https://nicepage.com">Mark as Taken</a>
-                </td>
-                <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-20">
-                  <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-4" href="https://nicepage.com">[CRN]</a>
-                </td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-              </tr>
-              <tr style="height: 34px;">
-                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-28">
-                  <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-5" href="https://nicepage.com">Mark as Taken</a>
-                </td>
-                <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-29">
-                  <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-6" href="https://nicepage.com">[CRN]</a>
-                </td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-              </tr>
-              <tr style="height: 34px;">
-                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-37">
-                  <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-7" href="https://nicepage.com">Mark as Taken</a>
-                </td>
-                <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-38">
-                  <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-8" href="https://nicepage.com">[CRN]</a>
-                </td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-              </tr>
-              <tr style="height: 34px;">
-                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-46">
-                  <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-9" href="https://nicepage.com">Mark as Taken</a>
-                </td>
-                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-47">
-                  <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-10" href="https://nicepage.com">[CRN]</a>
-                </td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-              </tr>
-              <tr style="height: 34px;">
-                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-55"></td>
-                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-56"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-              </tr>
-              <tr style="height: 34px;">
-                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-64"></td>
-                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-65"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-              </tr>
-              <tr style="height: 34px;">
-                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-73"></td>
-                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-74"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-              </tr>
-              <tr style="height: 34px;">
-                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-82"></td>
-                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-83"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-              </tr>
-              <tr style="height: 34px;">
-                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-91"></td>
-                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-92"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-              </tr>
-              <tr style="height: 34px;">
-                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-100"></td>
-                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-101"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-              </tr>
-              <tr style="height: 34px;">
-                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-109"></td>
-                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-110"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-              </tr>
-              <tr style="height: 34px;">
-                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-118"></td>
-                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-119"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-              </tr>
-              <tr style="height: 34px;">
-                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-127"></td>
-                <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-128"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-              </tr>
+            {% endfor %}
             </tbody>
           </table>
         </div>
@@ -486,4 +287,8 @@
       </a>.
     </section>
   </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" 
+      integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+  <script src="{{ url_for('static', filename='script/modal.js') }}"></script>
 </html>

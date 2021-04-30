@@ -90,20 +90,20 @@ def set_favorite_schedule(netid, scheduleid):
     conn.close()
     return True
 
-def create_schedule(netid):
+def create_schedule(netid, sname):
     if not safe_input(netid):
         print("not safe input (create_schedule)")
-        return False
+        return -1
     conn = db.connect()
     query = 'SELECT MAX(ScheduleID) FROM Schedule ORDER BY ScheduleID'
     query_results = conn.execute(query).fetchall()
     max_val = int(query_results[0][0])
     new_val = max_val + 1
-    query = 'INSERT INTO Schedule (ScheduleID, Student) VALUES ({}, "{}")'.format(new_val, netid)
+    query = 'INSERT INTO Schedule (ScheduleID, Student, ScheduleName) VALUES ({}, "{}", "{}")'.format(new_val, netid, sname)
     conn.execute(query)
     conn.close()
 
-    return True
+    return new_val
     
 def link_schedule(netid, scheduleid):
     if not safe_input(netid) or not safe_input(scheduleid):
@@ -316,7 +316,7 @@ def show_details_by_crn(crn):
             "location": result[9]
         }
         results.append(course_details)
-    return results
+    return results[0]
 
 
 def debug_query_results(query_results):
@@ -438,13 +438,14 @@ def fetch_reqs_by_netid(netid):
         return None
 
     conn = db.connect()
-    query = 'SELECT Name FROM Requirement WHERE ReqID in (SELECT ReqID FROM InternalMajorReqs WHERE Major IN (SELECT Major FROM Student WHERE NetID = "{}"))'.format(netid)
+    query = 'SELECT ReqID, Name FROM Requirement WHERE ReqID in (SELECT ReqID FROM InternalMajorReqs WHERE Major IN (SELECT Major FROM Student WHERE NetID = "{}"))'.format(netid)
     query_results = conn.execute(query).fetchall()
     conn.close()
     results = []
     for result in query_results:
         name = {
-            "name": result[0]
+            "name": result[1],
+            "id": result[0]
         }
         results.append(name)
     return results
@@ -478,11 +479,20 @@ def fetch_course_by_req(reqid):
     conn.close()
     results = []
     for result in query_results:
-        course = {
-            "crn": result[0]
-        }
-        results.append(course)
+        results.append(result[0])
     return results
+
+
+# def get_unique_course_headings(crns):
+#     unique_names = []
+#     conn = db.connect()
+#     for crn in crns:
+#         query = 'SELECT Subject, Number FROM Class WHERE CRN = {}'.format(crn)
+#         query_result = conn.execute(query).fetchall()[0]
+#         name = query_result[0] + ' ' + query_result[1]
+#         if name not in unique_names:
+#             unique_names.append()
+
 
 def is_student_in_db(netid):
     if not safe_input(netid):
