@@ -25,7 +25,8 @@ def view_schedules():
         student_schedules = db_helper.fetch_schedules(netid)
         friend_schedules = db_helper.fetch_friend_schedules(netid)
 
-    return render_template("View-Schedules.html", sched=student_schedules, fsched=friend_schedules, cdata=course_data)
+    print(student_schedules)
+    return render_template("View-Schedules.html", sched=student_schedules[:10], fsched=friend_schedules, cdata=course_data, test="tester")
 
 #Generate schedule page
 @app.route("/gen_schedule", methods=['POST', 'GET'])

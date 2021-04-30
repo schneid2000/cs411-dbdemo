@@ -104,7 +104,7 @@ def create_schedule(netid):
     conn.close()
 
     return True
-    
+
 def link_schedule(netid, scheduleid):
     if not safe_input(netid) or not safe_input(scheduleid):
         return False
@@ -164,7 +164,7 @@ def fetch_course_by_subject_number(subject, number):
     output = []
     for row in query_results:
         output.append(row[0])
-    
+
     return output
 
 
@@ -173,7 +173,7 @@ def fetch_course_by_subject_number(subject, number):
 def fetch_course_by_crn(crn):
     if not safe_input(crn):
         return False
-    
+
     conn = db.connect()
     query = 'SELECT CRN FROM Class WHERE CRN = {}'.format(crn)
     query_results = conn.execute(query).fetchall()
@@ -229,7 +229,7 @@ def eval_friend_request(firstnetid, secondnetid):
 def add_course_taken(netid, crn):
     if not safe_input(netid) or not safe_input(crn):
         return False
-    
+
     conn = db.connect()
     query = 'INSERT INTO CoursesTaken (NetID, CRN) VALUES ("{}", {})'.format(netid, crn)
     conn.execute(query)
@@ -278,7 +278,7 @@ def show_req_courses(reqid):
     if not safe_input(reqid):
         print("reqid was not safe (show_req_courses)")
         return None
-    
+
     conn = db.connect()
     query = 'SELECT CRN FROM CourseReqs WHERE ReqID = {}'.format(reqid)
     query_results = conn.excute(query).fetchall()
@@ -298,7 +298,7 @@ def show_details_by_crn(crn):
     if not safe_input(crn):
         print("crn was not safe (show_details_by_crn)")
         return None
-    
+
     conn = db.connect()
     query = 'SELECT CRN, Subject, Number, Title, Type, Section, Time, EndTime, Days, Location FROM Class WHERE CRN = {}'.format(crn)
     query_results = conn.execute(query).fetchall()
@@ -327,12 +327,12 @@ def create_time_constraint(scheduleid, constraintid, start_time, end_time):
     if not safe_input(start_time) or not safe_input(end_time):
         print("start_time or end_time were not safe (create_time_constraint)")
         return False
-    
+
     conn = db.connect()
     query = 'INSERT INTO Constraints (ConstraintID, ScheduleID, StartTime, EndTime, Days) VALUES ({}, {}, {}, {}, "MTWRF")'.format(constraintid, scheduleid, start_time, end_time)
     query_results = conn.execute(query).fetchall()
     conn.close()
-    
+
     return True
 
 def delete_time_constraint(scheduleid, constraintid):
@@ -382,7 +382,7 @@ def fetch_schedules(netid):
         return None
 
     conn = db.connect()
-    query = 'SELECT ScheduleName, IsFavorite, TotalCredits FROM Schedule WHERE Student = "{}"'.format(netid)
+    query = 'SELECT ScheduleName, IsFavorite, TotalCredits, ScheduleID FROM Schedule WHERE Student like "{}"'.format(netid)
     query_results = conn.execute(query).fetchall()
     conn.close()
     results = []
@@ -390,7 +390,8 @@ def fetch_schedules(netid):
         schedule_data = {
             "name": result[0],
             "is_favorite": result[1],
-            "total_credits": result[2]
+            "total_credits": result[2],
+            "schedule_id": result[3]
         }
         results.append(schedule_data)
     return results
@@ -453,7 +454,7 @@ def fetch_time_constraints_by_schedule(scheduleid):
     if not safe_input(scheduleid):
         print("not safe input (fetch_time_constraints_by_schedule)")
         return None
-    
+
     conn = db.connect()
     query = 'SELECT ConstraintID, StartTime, EndTime FROM Constraints WHERE ScheduleID = {}'.format(scheduleid)
     query_results = conn.execute(query).fetchall()
@@ -471,7 +472,7 @@ def fetch_course_by_req(reqid):
     if not safe_input(reqid):
         print("not safe input (fetch_req_by_id)")
         return None
-    
+
     conn = db.connect()
     query = 'SELECT CRN FROM CourseReqs WHERE ReqID = {}'.format(reqid)
     query_results = conn.execute(query).fetchall()
@@ -488,7 +489,7 @@ def is_student_in_db(netid):
     if not safe_input(netid):
         print("not safe input (is_student_in_db)")
         return False
-    
+
     conn = db.connect()
     query = 'SELECT * FROM Student WHERE NetID = "{}"'.format(netid)
     query_results = conn.execute(query).fetchall()
@@ -570,13 +571,13 @@ def is_student_in_db(netid):
 #         useCourses = False
 #     if numcredits == '':
 #         useCredits = False
-    
+
 
 #     conn = db.connect()
 #     # initial_results = conn.execute("SELECT MAX(ReqID) FROM Requirement")
 #     # print(initial_results[0][0])
 #     query_results = None
-#     try: 
+#     try:
 #         query_results = conn.execute("SELECT * FROM Requirement WHERE ReqID = {};".format(reqid)).fetchall()
 #     except:
 #         print("Hello world!")
@@ -595,7 +596,7 @@ def is_student_in_db(netid):
 #         if useCourses:
 #             conn.execute("UPDATE Requirement SET ChooseN = {} WHERE ReqID = {};".format(numcourses, reqid))
 #         if useCredits:
-#             conn.execute("UPDATE Requirement SET RequiredCredits = {} WHERE ReqID = {};".format(numcredits, reqid))  
+#             conn.execute("UPDATE Requirement SET RequiredCredits = {} WHERE ReqID = {};".format(numcredits, reqid))
 #     conn.close()
 
 # def delete(reqid):
