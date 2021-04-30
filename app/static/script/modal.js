@@ -25,6 +25,56 @@ $(document).ready(function () {
         // }
     })
 
+    //Might do nothing I have no idea
+    $('#login-modal').on('show.bs.modal', function (event) {
+        const button = $(event.relatedTarget) // Button that triggered the modal
+        const taskID = button.data('source') // Extract info from data-* attributes
+        const content = button.data('content') // Extract info from data-* attributes
+
+        const modal = $(this)
+        if (taskID === 'loginuser') {
+            modal.find('.modal-title').text(taskID)
+            $('#task-form-display').removeAttr('taskID')
+        } else {
+            modal.find('.modal-title').text('Edit Task ' + taskID)
+            $('#task-form-display').attr('taskID', taskID)
+        }
+
+        if (content) {
+            modal.find('.form-control').val(content);
+        } else {
+            modal.find('.form-control').val('');
+        }
+    })
+
+    $('#submit-login').click(function () {
+        netid = $('#login-modal').find('.login-form-netid').val()
+        pw = $('#login-modal').find('.login-form-pw').val()
+        major = $('#login-modal').find('.login-form-mj').val()
+        console.log(netid)
+        console.log(pw)
+        console.log(major)
+        hashed_pw = sha3_256(pw)
+        console.log(hashed_pw)
+        $.ajax({
+            type: 'POST',
+            url: '/login',
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify({
+                'netid':netid,
+                'pw':hashed_pw,
+                'mj':major
+            }),
+            success: function (res) {
+                console.log(res.response)
+                location.reload();
+            },
+            error: function () {
+                console.log('Error');
+            }
+        });
+    });
+
 
     $("#submit-search").click(function () {
         // e.preventDefault();

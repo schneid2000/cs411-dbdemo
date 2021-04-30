@@ -81,7 +81,7 @@ def login():
         if not existence:
             #Create user and login
             major = data['mj']
-            creation_status = db_helper.create_user(netid, major, password)
+            creation_status = db_helper.create_user(netid, major, hashed_pass)
             if creation_status == True:
                 session['netid'] = netid
                 result = {'success': True, 'response': 'Successfully created account'}

@@ -50,9 +50,48 @@
         </nav>
       </div></header>
     <section class="u-clearfix u-section-1" id="sec-e865">
+      <div class="container">    
+        
+        <!-- Button trigger modal -->
+        <div style="text-align: right;">
+        <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#login-modal" data-source="loginuser">Login</button>
+        </div>
+
+        
+        <div class="modal fade" id="login-modal" tabindex="-1" aria-labelledby="Label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="Label">Create an account or login using a Netid and Password</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="input-group mb-3">
+                    <input type="text" class="login-form-mj" placeholder="major" aria-label="login-mj" aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-3">
+                  <input type="text" class="login-form-netid" placeholder="netid" aria-label="login-netid" aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-3">
+                  <input type="text" class="login-form-pw" placeholder="password" aria-label="login-pw" aria-describedby="basic-addon1">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="submit-login" type="button" class="btn btn-primary">Login</button>
+            </div>
+            </div>
+        </div>
+        </div>
+      </div>
       <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
         <a href="https://nicepage.com/css-templates" class="u-btn u-btn-round u-button-style u-custom-color-1 u-hover-custom-color-2 u-radius-6 u-btn-1">Enter/Change NetID</a>
-        <h1 class="u-text u-text-1">Welcome, [NetID]</h1>
+        {% if netid %}
+          <h1 class="u-text u-text-1">Welcome, {{netid}}</h1>
+        {% else %}
+          <h1 class="u-text u-text-1">Welcome to Mercury Scheduler!</h1>
+        {% endif %}
       </div>
     </section>
 
@@ -72,4 +111,11 @@
       </a>.
     </section>
   </body>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" 
+      integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+  <script src="{{ url_for('static', filename='script/modal.js') }}"></script>
+  <script src="static/script/sha3.min.js" type="text/javascript"></script>
+
 </html>

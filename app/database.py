@@ -29,17 +29,23 @@ def verify_hashed_login(username, hashed_pass):
     conn = db.connect()
     if not safe_input(username):
         return False
-    query = 'SELECT Password FROM Student WHERE NetID = "{}";'.format(username)
+    query = 'SELECT Hashed FROM Student WHERE NetID = "{}";'.format(username)
     query_results = conn.execute(query).fetchall()
     conn.close()
     #Would be a weird issue, but return none to be safe if duplicates
     if len(query_results) != 1:
         return False
 
-    password = query_results[0]
+    password = query_results[0][0]
+    print(type(password))
+    print(password)
+    print(hashed_pass)
+
     if hashed_pass == password:
+        print("Correct password")
         return True
 
+    print("Incorrect password")
     return False
 
 
@@ -61,16 +67,16 @@ def create_user(netid, major, password):
     if not safe_input(netid) or not safe_input(major) or not safe_input(password):
         return False
 
-    hasher = hashlib.sha3_256
-    hasher.update(password.encode())
-    hashed_pass = hasher.hexdigest()
+    #hasher = hashlib.sha3_256
+    #hasher.update(password.encode())
+    #hashed_pass = hasher.hexdigest()
 
     conn = db.connect()
-    query = 'INSERT INTO Student (NetID, Major, Password) VALUES ("{}", "{}", "{}")'.format(netid, major, password)
+    query = 'INSERT INTO Student (NetID, Major, Password, Hashed) VALUES ("{}", "{}", 12345, "{}")'.format(netid, major, password)
 
     #Not sure how to check if there was an error in the query but that would go here
 
-    query_results = conn.execute(query).fetchall()
+    conn.execute(query)
     conn.close()
     return True
 
@@ -477,6 +483,20 @@ def fetch_course_by_req(reqid):
         }
         results.append(course)
     return results
+
+def is_student_in_db(netid):
+    if not safe_input(netid):
+        print("not safe input (is_student_in_db)")
+        return False
+    
+    conn = db.connect()
+    query = 'SELECT * FROM Student WHERE NetID = "{}"'.format(netid)
+    query_results = conn.execute(query).fetchall()
+    conn.close()
+    if len(query_results) == 0:
+        return False
+
+    return True
 
 #STAGE 4 DEPRECATED BELOW
 #--------------------------------------------------------
