@@ -348,9 +348,12 @@ def show_details_by_crn(crn):
     if not safe_input(crn):
         print("crn was not safe (show_details_by_crn)")
         return None
+    final_crn = crn
+    if type(crn) == dict:
+        final_crn = crn['crn']
 
     conn = db.connect()
-    query = 'SELECT CRN, Subject, Number, Title, Type, Section, Time, EndTime, Days, Location FROM Class WHERE CRN = {}'.format(crn['crn'])
+    query = 'SELECT CRN, Subject, Number, Title, Type, Section, Time, EndTime, Days, Location FROM Class WHERE CRN = {}'.format(final_crn)
     query_results = conn.execute(query).fetchall()
     conn.close()
     results = []
