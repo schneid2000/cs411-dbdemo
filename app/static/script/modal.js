@@ -159,7 +159,27 @@ $(document).ready(function () {
         });
     });
 
-    $('#select-major-req').click(function (event) {
+    $('.favorite-schedule').click(function (event) {
+        console.log("favorite schedule button")
+        sid = $(this).data('id')
+        $.ajax({
+            type: 'POST',
+            url: '/setfav',
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify({
+                'sid': sid
+            }),
+            success: function (res) {
+                console.log(res.response)
+                location.reload();
+            },
+            error: function () {
+                console.log('Error');
+            }
+        });
+    });
+
+    $('.select-major-req').click(function (event) {
         console.log("Select major req button")
         reqid = $(this).data('id')
         filter_s = $('.filter-subject').val()

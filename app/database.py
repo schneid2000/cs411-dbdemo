@@ -85,8 +85,21 @@ def set_favorite_schedule(netid, scheduleid):
     if not safe_input(netid) or not safe_input(scheduleid):
         return False
     conn = db.connect()
-    query = 'UPDATE Student SET FavoriteSchedule = {} WHERE NetID = "{}"'.format(scheduleid, netid)
+    query = 'SELECT ScheduleID FROM Schedule WHERE Student = "{}" AND IsFavorite = 1'.format(netid)
     query_results = conn.execute(query).fetchall()
+    if len(query_results) > 1:
+        print("set_favorite_schedule, too many favorite schedules")
+        return False
+    if len(query_results) == 1:
+        #Unfavorite the previous favorited schedule if it exists
+        sid = query_results[0][0]
+        query = 'UPDATE Schedule SET IsFavorite = 0 WHERE ScheduleID = {}'.format()
+        conn.execute(query)
+    #Set the student's favorite schedule
+    query = 'UPDATE Student SET FavoriteSchedule = {} WHERE NetID = "{}"'.format(scheduleid, netid)
+    conn.execute(query)
+    #Set the schedule as favorite
+    query = 'UPDATE Schedule SET IsFavorite = 1 WHERE ScheduleID = {}'.format(scheduleid)
     conn.close()
     return True
 
