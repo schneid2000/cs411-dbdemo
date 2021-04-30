@@ -198,7 +198,21 @@ def fetch_courses_by_title(title):
         return None
 
     conn = db.connect()
-    query = 'SELECT CRN FROM Class WHERE Title LIKE "%{}%"'.format(title)
+    query = 'SELECT CRN FROM Class WHERE Title LIKE "%%{}%%"'.format(title)
+    query_results = conn.execute(query).fetchall()
+    conn.close()
+    results = []
+    for result in query_results:
+        results.append(result[0])
+    return results
+
+def fetch_courses_by_subject_like(subject):
+    if not safe_input(subject):
+        print("Not safe input (fetch_courses_by_subject_like)")
+        return None
+    print(subject)
+    conn = db.connect()
+    query = 'SELECT CRN FROM Class WHERE Subject LIKE "%%{}%%"'.format(subject)
     query_results = conn.execute(query).fetchall()
     conn.close()
     results = []

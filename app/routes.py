@@ -78,18 +78,37 @@ def gen_schedule():
         if 'filter_t' in data:
             session['filter_t'] = data['filter_t']
 
+    if data and 'req' in data and data['req'] == '' and (('filter_s' in data and data['filter_s'] != '') or ('filter_t' in data and data['filter_t'] != '')):
+        session.pop('req', None)
+
+    if data and ('filter_s' in data and data['filter_s'] != '') and ('filter_t' in data and data['filter_t'] == ''):
+        session.pop('filter_t', None)
+
+    if data and ('filter_s' in data and data['filter_s'] == '') and ('filter_t' in data and data['filter_t'] != ''):
+        session.pop('filter_s', None)
+
 
     if 'req' in session:
         print(session['req'])
         rc = db_helper.fetch_course_by_req(session['req'])
+
+    if 'filter_s' in session and session['filter_s']:
+        print(session['filter_s'])
+        rc = db_helper.fetch_courses_by_subject_like(session['filter_s'])
+
+    if 'filter_t' in session and session['filter_t']:
+        print(session['filter_t'])
+        rc = db_helper.fetch_courses_by_title(session['filter_t'])
+
+    print("here")
     rce = []
     for entry in rc:
         rce.append(db_helper.show_details_by_crn(entry))
 
-    if 'filter_s' in session:
+    if 'filter_s' in session and session['filter_s']:
         print(session['filter_s'], 'filter_s')
         rce = db_helper.filter_courses_by_subject(rce, session['filter_s'])
-    if 'filter_t' in session:
+    if 'filter_t' in session and session['filter_t']:
         print(session['filter_t'], 'filter_t')
         rce = db_helper.filter_courses_by_title(rce, session['filter_t'])
 
