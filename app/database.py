@@ -403,14 +403,16 @@ def fetch_friend_schedules(netid):
         return None
 
     conn = db.connect()
-    query = 'SELECT ScheduleName, TotalCredits FROM Schedule WHERE Schedule.Student IN (SELECT FriendsWithNetID From Friends WHERE FriendNetID = "{}")'.format(netid)
+    query = 'SELECT ScheduleName, TotalCredits, Student, ScheduleID FROM Schedule WHERE Schedule.Student IN (SELECT FriendsWithNetID From Friends WHERE FriendNetID = "{}" AND IsFavorite = 1)'.format(netid)
     query_results = conn.execute(query).fetchall()
     conn.close()
     results = []
     for result in query_results:
         schedule_data = {
             "name": result[0],
-            "total_credits": result[1]
+            "total_credits": result[1],
+            "friend_netID": result[2],
+            "schedule_ID": result[3]
         }
         results.append(schedule_data)
     return results

@@ -71,6 +71,12 @@
                         <col width="6.500000000000005%">
                       </colgroup>
                       <tbody class="u-table-body">
+                        <tr style="height: 51px;">
+                          <td class="u-border-1 u-border-grey-30 u-table-cell"><b>Schedule Name</b></td>
+                          <td class="u-border-1 u-border-grey-30 u-table-cell"><b>ID</b></td>
+                          <td class="u-border-1 u-border-grey-30 u-table-cell"><b>Fav</b></td>
+                          <td class="u-border-1 u-border-grey-30 u-table-cell"><b>Select</b></td>
+                        </tr>
                         {% if sched %}
                         {% for schedule in sched %}
                         <tr style="height: 51px;">
@@ -141,18 +147,30 @@
                               </colgroup>
                               <tbody class="u-table-body">
                                 <tr style="height: 51px;">
-                                  <td class="u-border-1 u-border-grey-30 u-table-cell">[Friend's Name]</td>
+                                  <td class="u-border-1 u-border-grey-30 u-table-cell"><b>Friend NetID</b></td>
+                                  <td class="u-border-1 u-border-grey-30 u-table-cell"><b>ID</b></td>
+                                  <td class="u-border-1 u-border-grey-30 u-table-cell"><b>Select</b></td>
+                                </tr>
+                              {% if fsched %}
+                              {% for schedule in fsched %}
+                                <tr style="height: 51px;">
+                                  <td class="u-border-1 u-border-grey-30 u-table-cell">{{schedule['friend_netID']}}</td>
+                                  <td class="u-border-1 u-border-grey-30 u-table-cell">{{schedule['schedule_ID']}}</td>
                                   <td class="u-border-1 u-border-grey-30 u-table-cell">
                                     <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-6" href="https://nicepage.com">Select</a>
                                   </td>
                                 </tr>
+                                {% endfor %}
+                                {% else %}
                                 <tr style="height: 33px;">
-                                  <td class="u-border-1 u-border-grey-30 u-table-cell">[Friend's Name]</td>
+                                  <td class="u-border-1 u-border-grey-30 u-table-cell">No Friends Found</td>
+                                  <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
                                   <td class="u-border-1 u-border-grey-30 u-table-cell">
                                     <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-7" href="https://nicepage.com">Select</a>
                                   </td>
                                 </tr>
-                                <tr style="height: 48px;">
+                                {% endif %}
+                                <!-- <tr style="height: 48px;">
                                   <td class="u-border-1 u-border-grey-30 u-table-cell">[Friend's Name]</td>
                                   <td class="u-border-1 u-border-grey-30 u-table-cell">
                                     <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-8" href="https://nicepage.com">Select</a>
@@ -169,8 +187,8 @@
                                   <td class="u-border-1 u-border-grey-30 u-table-cell">
                                     <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-10" href="https://nicepage.com">Select</a>
                                   </td>
-                                </tr>
-                                <tr style="height: 48px;">
+                                </tr> -->
+                                <!-- <tr style="height: 48px;">
                                   <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
                                   <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
                                 </tr>
@@ -181,7 +199,7 @@
                                 <tr style="height: 48px;">
                                   <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
                                   <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                                </tr>
+                                </tr> -->
                               </tbody>
                             </table>
                           </div>
