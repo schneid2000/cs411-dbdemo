@@ -402,7 +402,7 @@ def fetch_friend_schedules(netid):
         return None
 
     conn = db.connect()
-    query = 'SELECT ScheduleName, TotalCredits FROM Schedule, SELECT FriendsWithNetID From Friends WHERE FriendNetID = "{}" AS temp WHERE Student IN temp'.format(netid)
+    query = 'SELECT ScheduleName, TotalCredits FROM Schedule WHERE Schedule.Student IN (SELECT FriendsWithNetID From Friends WHERE FriendNetID = "{}")'.format(netid)
     query_results = conn.execute(query).fetchall()
     conn.close()
     results = []
@@ -438,7 +438,7 @@ def fetch_reqs_by_netid(netid):
         return None
 
     conn = db.connect()
-    query = 'SELECT Name FROM Requirement, SELECT ReqID FROM InternalMajorReqs WHERE Major = (SELECT Major FROM Student WHERE NetID = "{}") as temp WHERE ReqID in temp'.format(netid)
+    query = 'SELECT Name FROM Requirement WHERE ReqID in (SELECT ReqID FROM InternalMajorReqs WHERE Major IN (SELECT Major FROM Student WHERE NetID = "{}"))'.format(netid)
     query_results = conn.execute(query).fetchall()
     conn.close()
     results = []
