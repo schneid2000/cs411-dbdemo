@@ -159,7 +159,7 @@ $(document).ready(function () {
         });
     });
 
-    $('#select-major-req').click(function (event) {
+    $('.select-major-req').click(function (event) {
         console.log("Select major req button")
         reqid = $(this).data('id')
         filter_s = $('.filter-subject').val()
