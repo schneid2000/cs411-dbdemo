@@ -79,7 +79,7 @@
               <tr style="height: 51px;">
                 <td class="u-border-1 u-border-grey-30 u-table-cell">{{schedule['name']}}</td>
                 <td class="u-border-1 u-border-grey-30 u-table-cell">{{schedule['schedule_id']}}</td>
-                {% if schedule['is_favorite'] == 1 %}
+                {% if schedule.is_favorite == 1 %}
                 <td class="u-border-1 u-border-grey-30 u-table-cell"><span class="u-icon u-icon-1"><svg class="u-svg-content" viewBox="0 0 55.867 55.867" x="0px" y="0px" style="width: 1em; height: 1em;"><path d="M55.818,21.578c-0.118-0.362-0.431-0.626-0.808-0.681L36.92,18.268L28.83,1.876c-0.168-0.342-0.516-0.558-0.896-0.558
 s-0.729,0.216-0.896,0.558l-8.091,16.393l-18.09,2.629c-0.377,0.055-0.689,0.318-0.808,0.681c-0.117,0.361-0.02,0.759,0.253,1.024
 l13.091,12.76l-3.091,18.018c-0.064,0.375,0.09,0.754,0.397,0.978c0.309,0.226,0.718,0.255,1.053,0.076l16.182-8.506l16.18,8.506
@@ -99,7 +99,7 @@ l-16.605-2.413c-0.326-0.047-0.607-0.252-0.753-0.547L27.934,4.578l-7.427,15.047c-
                 </td>
                 {% endif %}
                 <td class="u-border-1 u-border-grey-30 u-table-cell">
-                  <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-2" href="view_schedule:{{schedule['schedule_id']}}">Select</a>
+                  <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-2" href="view_schedule:{{schedule.schedule_id}}">Select</a>
                 </td>
               </tr>
               {% endfor %}
@@ -114,7 +114,8 @@ c0.146,0.077,0.307,0.115,0.466,0.115c0.207,0,0.413-0.064,0.588-0.191c0.308-0.224
 l13.091-12.761C55.838,22.336,55.936,21.939,55.818,21.578z"></path></svg><img></span>
                 </td>
                 <td class="u-border-1 u-border-grey-30 u-table-cell">
-                  <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-1" href="view_schedule:{{schedule['schedule_id']}}">Select</a>
+                  <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-1">Select</a>
+                </td>
               {% endif %}
             </tbody>
           </table>
@@ -445,4 +446,8 @@ l13.091-12.761C55.838,22.336,55.936,21.939,55.818,21.578z"></path></svg><img></s
       </a>.
     </section>
   </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" 
+      integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+  <script src="{{ url_for('static', filename='script/modal.js') }}"></script>
 </html>

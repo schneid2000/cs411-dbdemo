@@ -162,6 +162,7 @@ $(document).ready(function () {
     $('.favorite-schedule').click(function (event) {
         console.log("favorite schedule button")
         sid = $(this).data('id')
+        console.log(sid)
         $.ajax({
             type: 'POST',
             url: '/setfav',

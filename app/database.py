@@ -93,13 +93,14 @@ def set_favorite_schedule(netid, scheduleid):
     if len(query_results) == 1:
         #Unfavorite the previous favorited schedule if it exists
         sid = query_results[0][0]
-        query = 'UPDATE Schedule SET IsFavorite = 0 WHERE ScheduleID = {}'.format()
+        query = 'UPDATE Schedule SET IsFavorite = 0 WHERE ScheduleID = {}'.format(sid)
         conn.execute(query)
     #Set the student's favorite schedule
     query = 'UPDATE Student SET FavoriteSchedule = {} WHERE NetID = "{}"'.format(scheduleid, netid)
     conn.execute(query)
     #Set the schedule as favorite
     query = 'UPDATE Schedule SET IsFavorite = 1 WHERE ScheduleID = {}'.format(scheduleid)
+    conn.execute(query)
     conn.close()
     return True
 
