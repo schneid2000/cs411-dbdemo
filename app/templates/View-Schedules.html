@@ -152,7 +152,7 @@ l13.091-12.761C55.838,22.336,55.936,21.939,55.818,21.578z"></path></svg><img></s
                           <td class="u-border-1 u-border-grey-30 u-table-cell">{{schedule['friend_netID']}}</td>
                           <td class="u-border-1 u-border-grey-30 u-table-cell">{{schedule['schedule_ID']}}</td>
                           <td class="u-border-1 u-border-grey-30 u-table-cell">
-                            <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-1" href="view_schedule:{{schedule['schedule_id']}}">Select</a>
+                            <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-1" href="view_schedule:{{schedule['schedule_ID']}}:1">Select</a>
                           </td>
                         </tr>
                         {% endfor %}
@@ -268,7 +268,9 @@ l13.091-12.761C55.838,22.336,55.936,21.939,55.818,21.578z"></path></svg><img></s
                           <td class="u-border-1 u-border-grey-30 u-custom-color-1 u-table-cell u-table-cell-1">Class</td>
                           <td class="u-border-1 u-border-grey-30 u-custom-color-1 u-table-cell u-table-cell-2">Type</td>
                           <td class="u-border-1 u-border-grey-30 u-custom-color-1 u-table-cell u-table-cell-2">CRN</td>
+                          {% if isFriends == 0 %}
                           <td class="u-border-1 u-border-grey-30 u-custom-color-1 u-table-cell u-table-cell-3">Delete</td>
+                          {% endif %}
                         </tr>
                         {% if cdata %}
                         {% for class in cdata %}
@@ -276,9 +278,11 @@ l13.091-12.761C55.838,22.336,55.936,21.939,55.818,21.578z"></path></svg><img></s
                           <td class="u-border-1 u-border-grey-30 u-table-cell">{{class['class']}} {{class['title']}}</td>
                           <td class="u-border-1 u-border-grey-30 u-table-cell">{{class['type']}}</td>
                           <td class="u-border-1 u-border-grey-30 u-table-cell">{{class['crn']}}</td>
+                          {% if isFriends == 0 %}
                           <td class="u-border-1 u-border-grey-30 u-table-cell">
                             <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-2" href="/delete:{{viewID}}:{{class['crn']}}">Delete</a>
                           </td>
+                          {% endif %}
                         </tr>
                         {% endfor %}
                         {% endif %}

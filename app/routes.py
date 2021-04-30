@@ -7,7 +7,8 @@ from app import database as db_helper
 #View schedule page
 @app.route("/view_schedule", methods=['POST', 'GET'])
 @app.route("/view_schedule:<schedule_id>", methods=['POST', 'GET'])
-def view_schedules(schedule_id=None):
+@app.route("/view_schedule:<schedule_id>:<isFriends>")
+def view_schedules(schedule_id=None, isFriends=0):
     print("view_schedules page")
     #Display the schedules of netid, the schedules of the friends of netid, and the classes in the schedule
     #assume we have some session variable called netid i guess
@@ -63,7 +64,9 @@ def view_schedules(schedule_id=None):
         newDay = sorted(sorted_course_data[i], key = lambda i: i['start_time'])
         hour_sorted_course_data.append(newDay)
 
-    return render_template("View-Schedules.html", sched=student_schedules[:9], fsched=friend_schedules, cdata=course_data, viewID=schedule_id, viewName=viewingName, sortedCData=hour_sorted_course_data, tCredits=totalCredits)
+
+
+    return render_template("View-Schedules.html", sched=student_schedules[:9], fsched=friend_schedules, cdata=course_data, viewID=schedule_id, viewName=viewingName, sortedCData=hour_sorted_course_data, tCredits=totalCredits, friendSchedule=isFriends)
 
 @app.route("/delete:<schedule_id>:<crn>", methods=['POST', 'GET'])
 def delete_class_from_schedule(schedule_id=None, crn=None):
