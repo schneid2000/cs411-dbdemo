@@ -103,13 +103,10 @@ def create_schedule(netid, sname):
     conn.execute(query)
     conn.close()
 
-<<<<<<< HEAD
     return new_val
-    
-=======
-    return True
 
->>>>>>> bb386b24a46b62e80c05659febdc317f4745a3de
+
+
 def link_schedule(netid, scheduleid):
     if not safe_input(netid) or not safe_input(scheduleid):
         return False
