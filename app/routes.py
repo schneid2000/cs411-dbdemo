@@ -48,9 +48,11 @@ def gen_schedule():
 
     rc = []
     #Display the filtered search results
-    if data is not None and 'req' in data:
-        reqid = data['req']
-        session['req'] = reqid
+    if data is not None:
+        if 'req' in data:
+            print(data['req'], 'req')
+            reqid = data['req']
+            session['req'] = reqid
         if 'filter_s' in data:
             session['filter_s'] = data['filter_s']
         if 'filter_t' in data:
@@ -60,14 +62,19 @@ def gen_schedule():
     if 'req' in session:
         print(session['req'])
         rc = db_helper.fetch_course_by_req(session['req'])
-        if 'filter_s' in session:
-            rc = db_helper.filter_courses_by_subject(rc, session['filter_s'])
-        if 'filter_t' in session:
-            rc = db_helper.filter_courses_by_title(rc, session['filter_t'])
-
     rce = []
     for entry in rc:
         rce.append(db_helper.show_details_by_crn(entry))
+
+    if 'filter_s' in session:
+        print(session['filter_s'], 'filter_s')
+        rce = db_helper.filter_courses_by_subject(rce, session['filter_s'])
+    if 'filter_t' in session:
+        print(session['filter_t'], 'filter_t')
+        rce = db_helper.filter_courses_by_title(rce, session['filter_t'])
+
+
+    
     print(rce)
     return render_template("Generate-a-Schedule.html", reqs=reqnames, timec=tc, reqc=rce)
 

@@ -169,6 +169,20 @@ def fetch_course_by_subject_number(subject, number):
 
     return output
 
+def fetch_courses_by_title(title):
+    if not safe_input(title):
+        print("Not safe input (fetch_courses_by_title)")
+        return None
+
+    conn = db.connect()
+    query = 'SELECT CRN FROM Class WHERE Title LIKE "%{}%"'.format(title)
+    query_results = conn.execute(query).fetchall()
+    conn.close()
+    results = []
+    for result in query_results:
+        results.append(result[0])
+    return results
+
 
 #Returns a class from a CRN
 #Just returns the CRN for now, will include more details later

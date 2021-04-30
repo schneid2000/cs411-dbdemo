@@ -99,13 +99,61 @@ $(document).ready(function () {
     $('#select-major-req').click(function (event) {
         console.log("Select major req button")
         reqid = $(this).data('id')
+        filter_s = $('.filter-subject').val()
+        filter_t = $('.filter-title').val()
         console.log(reqid)
         $.ajax({
             type: 'POST',
             url: '/gen_schedule',
             contentType: 'application/json;charset=UTF-8',
             data: JSON.stringify({
-                'req':reqid
+                'req':reqid,
+                'filter_s':filter_s,
+                'filter_t':filter_t
+            }),
+            success: function (res) {
+                console.log(res.response)
+                location.reload();
+            },
+            error: function () {
+                console.log('Error');
+            }
+        });
+    });
+
+    $('#filter-form-subject').click(function () {
+        console.log("Filter subject button")
+        filter_s = $('.filter-subject').val()
+        filter_t = $('.filter-title').val()
+        $.ajax({
+            type: 'POST',
+            url: '/gen_schedule',
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify({
+                'filter_s':filter_s,
+                'filter_t':filter_t
+            }),
+            success: function (res) {
+                console.log(res.response)
+                location.reload();
+            },
+            error: function () {
+                console.log('Error');
+            }
+        });
+    });
+
+    $('#filter-form-title').click(function () {
+        console.log("Filter form button")
+        filter_s = $('.filter-subject').val()
+        filter_t = $('.filter-title').val()
+        $.ajax({
+            type: 'POST',
+            url: '/gen_schedule',
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify({
+                'filter_s':filter_s,
+                'filter_t':filter_t
             }),
             success: function (res) {
                 console.log(res.response)
