@@ -308,6 +308,8 @@ def logout():
     result = {'success': False, 'response': 'logout error'}
     if 'netid' in session:
         session.pop('netid')
+        if 'sid' in session:
+            session.pop('sid', None)
         result = {'success': True, 'response': 'logout successful'}
     return jsonify(result)
 
