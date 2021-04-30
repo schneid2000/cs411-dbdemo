@@ -540,14 +540,25 @@ def fetch_reqs_by_netid(netid):
     conn = db.connect()
     query = 'SELECT ReqID, Name FROM Requirement WHERE ReqID in (SELECT ReqID FROM InternalMajorReqs WHERE Major IN (SELECT Major FROM Student WHERE NetID = "{}"))'.format(netid)
     query_results = conn.execute(query).fetchall()
+    query = 'SELECT Major FROM Student WHERE NetID = "{}"'.format(netid)
+    query_results2 = conn.execute(query).fetchall()
+    query = 'call Results("{}", "{}", 0)'.format(netid, query_results2[0][0])
+    proc_results = conn.execute(query).fetchall()
+    print(proc_results)
     conn.close()
     results = []
     for result in query_results:
-        name = {
-            "name": result[1],
-            "id": result[0]
-        }
-        results.append(name)
+        found = False
+        for p_result in proc_results:
+            reqid = p_result[1]
+            if reqid == result[0]:
+                found = True
+        if found == False:
+            name = {
+                "name": result[1],
+                "id": result[0]
+            }
+            results.append(name)
     return results
 
 def fetch_time_constraints_by_schedule(scheduleid):
