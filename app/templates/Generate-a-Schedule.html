@@ -252,10 +252,10 @@
               {% for course in reqc %}
               <tr style="height: 28px;">
                 <td class="u-border-1 u-border-grey-30 u-grey-5 u-table-cell u-table-cell-10">
-                  <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-1" href="https://nicepage.com">Mark as Taken</a>
+                  <button class="add-course-taken u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-1" data-crn={{course.crn}}>Mark as Taken</button>
                 </td>
                 <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-11">
-                  <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-2" href="https://nicepage.com">{{course.crn}}</a>
+                  <button class="add-course-sched u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-2" data-crn={{course.crn}}>{{course.crn}}</button>
                 </td>
                 <td class="u-border-1 u-border-grey-30 u-table-cell">{{course.class}}</td>
                 <td class="u-border-1 u-border-grey-30 u-table-cell">{{course.title}}</td>

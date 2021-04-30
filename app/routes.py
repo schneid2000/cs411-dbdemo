@@ -168,8 +168,8 @@ def add_course_taken():
     result = {'success': False, 'response': 'add course taken unsuccessful'}
     data = request.get_json()
     netid = session['netid']
-    if 'course' in data:
-        crn = data['course']
+    if 'crn' in data:
+        crn = data['crn']
         db_helper.add_course_taken(netid, crn)
         result = {'success': True, 'response': 'add course taken successful'}
 
@@ -180,9 +180,9 @@ def add_course_taken():
 def add_to_schedule():
     result = {'success': False, 'response': 'add course taken unsuccessful'}
     data = request.get_json()
-    if 'course' in data and 'sid' in data:
-        sid = data['sid']
-        crn = data['course']
+    if 'crn' in data and 'sid' in session:
+        sid = session['sid']
+        crn = data['crn']
         db_helper.add_course_to_schedule(sid, crn)
         result = {'success': True, 'response': 'add course taken successful'}
 

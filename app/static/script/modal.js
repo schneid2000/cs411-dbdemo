@@ -165,6 +165,46 @@ $(document).ready(function () {
         });
     });
 
+    $('.add-course-taken').click(function () {
+        console.log("add course to coursestaken")
+        crn = $(this).data('crn')
+        $.ajax({
+            type: 'POST',
+            url: '/course_taken',
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify({
+                'crn': crn
+            }),
+            success: function (res) {
+                console.log(res.response)
+                location.reload();
+            },
+            error: function () {
+                console.log('Error');
+            }
+        });
+    });
+
+    $('.add-course-sched').click(function () {
+        console.log("add course to schedule")
+        crn = $(this).data('crn')
+        $.ajax({
+            type: 'POST',
+            url: '/add_to_schedule',
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify({
+                'crn': crn
+            }),
+            success: function (res) {
+                console.log(res.response)
+                location.reload();
+            },
+            error: function () {
+                console.log('Error');
+            }
+        });
+    });
+
     $('#submit-logout').click(function () {
         $.ajax({
             type: 'POST',
