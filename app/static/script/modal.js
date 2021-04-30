@@ -75,6 +75,21 @@ $(document).ready(function () {
         });
     });
 
+    $('#submit-logout').click(function () {
+        $.ajax({
+            type: 'POST',
+            url: '/logout',
+            contentType: 'application/json;charset=UTF-8',
+            success: function (res) {
+                console.log(res.response)
+                location.reload();
+            },
+            error: function () {
+                console.log('Error');
+            }
+        });
+    });
+
 
     $("#submit-search").click(function () {
         // e.preventDefault();

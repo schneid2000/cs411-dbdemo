@@ -158,6 +158,15 @@ def add_to_schedule():
 
     return jsonify(result)
 
+#Logout
+@app.route("/logout", methods=['POST'])
+def logout():
+    result = {'success': False, 'response': 'logout error'}
+    if 'netid' in session:
+        session.pop('netid')
+        result = {'success': True, 'response': 'logout successful'}
+    return jsonify(result)
+
 
 #STAGE 4 DEPRECATED  BELOW
 #------------------------------------------------------------
