@@ -71,22 +71,19 @@
                         <col width="6.500000000000005%">
                       </colgroup>
                       <tbody class="u-table-body">
-                        <tr style="height: 62px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">[Schedule Name]</td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">[SID]</td>
+                        {% if sched %}
+                        {% for schedule in sched %}
+                        <tr style="height: 51px;">
+                          <td class="u-border-1 u-border-grey-30 u-table-cell">{{schedule['name']}}</td>
+                          <td class="u-border-1 u-border-grey-30 u-table-cell">{{schedule['schedule_id']}}</td>
+                          {% if schedule['is_favorite'] == 1 %}
                           <td class="u-border-1 u-border-grey-30 u-table-cell"><span class="u-icon u-icon-1"><svg class="u-svg-content" viewBox="0 0 55.867 55.867" x="0px" y="0px" style="width: 1em; height: 1em;"><path d="M55.818,21.578c-0.118-0.362-0.431-0.626-0.808-0.681L36.92,18.268L28.83,1.876c-0.168-0.342-0.516-0.558-0.896-0.558
 	s-0.729,0.216-0.896,0.558l-8.091,16.393l-18.09,2.629c-0.377,0.055-0.689,0.318-0.808,0.681c-0.117,0.361-0.02,0.759,0.253,1.024
 	l13.091,12.76l-3.091,18.018c-0.064,0.375,0.09,0.754,0.397,0.978c0.309,0.226,0.718,0.255,1.053,0.076l16.182-8.506l16.18,8.506
 	c0.146,0.077,0.307,0.115,0.466,0.115c0.207,0,0.413-0.064,0.588-0.191c0.308-0.224,0.462-0.603,0.397-0.978l-3.09-18.017
 	l13.091-12.761C55.838,22.336,55.936,21.939,55.818,21.578z"></path></svg><img></span>
                           </td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">
-                            <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-1" href="https://nicepage.com">Select</a>
-                          </td>
-                        </tr>
-                        <tr style="height: 57px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">[Schedule Name]</td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">[SID]</td>
+                          {% else %}
                           <td class="u-border-1 u-border-grey-30 u-table-cell"><span class="u-icon u-icon-2"><svg class="u-svg-content" viewBox="0 0 55.867 55.867" x="0px" y="0px" style="width: 1em; height: 1em;"><path d="M11.287,54.548c-0.207,0-0.414-0.064-0.588-0.191c-0.308-0.224-0.462-0.603-0.397-0.978l3.091-18.018L0.302,22.602
 	c-0.272-0.266-0.37-0.663-0.253-1.024c0.118-0.362,0.431-0.626,0.808-0.681l18.09-2.629l8.091-16.393
 	c0.168-0.342,0.516-0.558,0.896-0.558l0,0c0.381,0,0.729,0.216,0.896,0.558l8.09,16.393l18.091,2.629
@@ -97,91 +94,25 @@
 	l-16.605-2.413c-0.326-0.047-0.607-0.252-0.753-0.547L27.934,4.578l-7.427,15.047c-0.146,0.295-0.427,0.5-0.753,0.547L3.149,22.584z
 	"></path></svg><img></span>
                           </td>
+                          {% endif %}
                           <td class="u-border-1 u-border-grey-30 u-table-cell">
-                            <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-2" href="https://nicepage.com">Select</a>
+                            <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-1" href="https://nicepage.com">Select</a>
                           </td>
                         </tr>
-                        <tr style="height: 59px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">[Schedule Name]</td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">[SID]</td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"><span class="u-icon u-icon-3"><svg class="u-svg-content" viewBox="0 0 55.867 55.867" x="0px" y="0px" style="width: 1em; height: 1em;"><path d="M11.287,54.548c-0.207,0-0.414-0.064-0.588-0.191c-0.308-0.224-0.462-0.603-0.397-0.978l3.091-18.018L0.302,22.602
-	c-0.272-0.266-0.37-0.663-0.253-1.024c0.118-0.362,0.431-0.626,0.808-0.681l18.09-2.629l8.091-16.393
-	c0.168-0.342,0.516-0.558,0.896-0.558l0,0c0.381,0,0.729,0.216,0.896,0.558l8.09,16.393l18.091,2.629
-	c0.377,0.055,0.689,0.318,0.808,0.681c0.117,0.361,0.02,0.759-0.253,1.024L42.475,35.363l3.09,18.017
-	c0.064,0.375-0.09,0.754-0.397,0.978c-0.308,0.226-0.717,0.255-1.054,0.076l-16.18-8.506l-16.182,8.506
-	C11.606,54.51,11.446,54.548,11.287,54.548z M3.149,22.584l12.016,11.713c0.235,0.229,0.343,0.561,0.287,0.885L12.615,51.72
-	l14.854-7.808c0.291-0.154,0.638-0.154,0.931,0l14.852,7.808l-2.836-16.538c-0.056-0.324,0.052-0.655,0.287-0.885l12.016-11.713
-	l-16.605-2.413c-0.326-0.047-0.607-0.252-0.753-0.547L27.934,4.578l-7.427,15.047c-0.146,0.295-0.427,0.5-0.753,0.547L3.149,22.584z
-	"></path></svg><img></span>
-                          </td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">
-                            <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-3" href="https://nicepage.com">Select</a>
-                          </td>
-                        </tr>
-                        <tr style="height: 59px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">[Schedule Name]</td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">[SID]</td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"><span class="u-icon u-icon-4"><svg class="u-svg-content" viewBox="0 0 55.867 55.867" x="0px" y="0px" style="width: 1em; height: 1em;"><path d="M11.287,54.548c-0.207,0-0.414-0.064-0.588-0.191c-0.308-0.224-0.462-0.603-0.397-0.978l3.091-18.018L0.302,22.602
-	c-0.272-0.266-0.37-0.663-0.253-1.024c0.118-0.362,0.431-0.626,0.808-0.681l18.09-2.629l8.091-16.393
-	c0.168-0.342,0.516-0.558,0.896-0.558l0,0c0.381,0,0.729,0.216,0.896,0.558l8.09,16.393l18.091,2.629
-	c0.377,0.055,0.689,0.318,0.808,0.681c0.117,0.361,0.02,0.759-0.253,1.024L42.475,35.363l3.09,18.017
-	c0.064,0.375-0.09,0.754-0.397,0.978c-0.308,0.226-0.717,0.255-1.054,0.076l-16.18-8.506l-16.182,8.506
-	C11.606,54.51,11.446,54.548,11.287,54.548z M3.149,22.584l12.016,11.713c0.235,0.229,0.343,0.561,0.287,0.885L12.615,51.72
-	l14.854-7.808c0.291-0.154,0.638-0.154,0.931,0l14.852,7.808l-2.836-16.538c-0.056-0.324,0.052-0.655,0.287-0.885l12.016-11.713
-	l-16.605-2.413c-0.326-0.047-0.607-0.252-0.753-0.547L27.934,4.578l-7.427,15.047c-0.146,0.295-0.427,0.5-0.753,0.547L3.149,22.584z
-	"></path></svg><img></span>
+                        {% endfor %}
+                        {% else %}
+                        <tr style="height: 51px;">
+                          <td class="u-border-1 u-border-grey-30 u-table-cell">No Schedules Yet</td>
+                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
+                          <td class="u-border-1 u-border-grey-30 u-table-cell"><span class="u-icon u-icon-1"><svg class="u-svg-content" viewBox="0 0 55.867 55.867" x="0px" y="0px" style="width: 1em; height: 1em;"><path d="M55.818,21.578c-0.118-0.362-0.431-0.626-0.808-0.681L36.92,18.268L28.83,1.876c-0.168-0.342-0.516-0.558-0.896-0.558
+	s-0.729,0.216-0.896,0.558l-8.091,16.393l-18.09,2.629c-0.377,0.055-0.689,0.318-0.808,0.681c-0.117,0.361-0.02,0.759,0.253,1.024
+	l13.091,12.76l-3.091,18.018c-0.064,0.375,0.09,0.754,0.397,0.978c0.309,0.226,0.718,0.255,1.053,0.076l16.182-8.506l16.18,8.506
+	c0.146,0.077,0.307,0.115,0.466,0.115c0.207,0,0.413-0.064,0.588-0.191c0.308-0.224,0.462-0.603,0.397-0.978l-3.09-18.017
+	l13.091-12.761C55.838,22.336,55.936,21.939,55.818,21.578z"></path></svg><img></span>
                           </td>
                           <td class="u-border-1 u-border-grey-30 u-table-cell">
-                            <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-4" href="https://nicepage.com">Select</a>
-                          </td>
-                        </tr>
-                        <tr style="height: 59px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">[Schedule Name]</td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">[SID]</td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"><span class="u-icon u-icon-5"><svg class="u-svg-content" viewBox="0 0 55.867 55.867" x="0px" y="0px" style="width: 1em; height: 1em;"><path d="M11.287,54.548c-0.207,0-0.414-0.064-0.588-0.191c-0.308-0.224-0.462-0.603-0.397-0.978l3.091-18.018L0.302,22.602
-	c-0.272-0.266-0.37-0.663-0.253-1.024c0.118-0.362,0.431-0.626,0.808-0.681l18.09-2.629l8.091-16.393
-	c0.168-0.342,0.516-0.558,0.896-0.558l0,0c0.381,0,0.729,0.216,0.896,0.558l8.09,16.393l18.091,2.629
-	c0.377,0.055,0.689,0.318,0.808,0.681c0.117,0.361,0.02,0.759-0.253,1.024L42.475,35.363l3.09,18.017
-	c0.064,0.375-0.09,0.754-0.397,0.978c-0.308,0.226-0.717,0.255-1.054,0.076l-16.18-8.506l-16.182,8.506
-	C11.606,54.51,11.446,54.548,11.287,54.548z M3.149,22.584l12.016,11.713c0.235,0.229,0.343,0.561,0.287,0.885L12.615,51.72
-	l14.854-7.808c0.291-0.154,0.638-0.154,0.931,0l14.852,7.808l-2.836-16.538c-0.056-0.324,0.052-0.655,0.287-0.885l12.016-11.713
-	l-16.605-2.413c-0.326-0.047-0.607-0.252-0.753-0.547L27.934,4.578l-7.427,15.047c-0.146,0.295-0.427,0.5-0.753,0.547L3.149,22.584z
-	"></path></svg><img></span>
-                          </td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">
-                            <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-5" href="https://nicepage.com">Select</a>
-                          </td>
-                        </tr>
-                        <tr style="height: 59px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                        </tr>
-                        <tr style="height: 59px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                        </tr>
-                        <tr style="height: 59px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                        </tr>
-                        <tr style="height: 59px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                        </tr>
-                        <tr style="height: 59px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                        </tr>
+                            <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-1" href="https://nicepage.com">Select</a>
+                        {% endif %}
                       </tbody>
                     </table>
                   </div>
