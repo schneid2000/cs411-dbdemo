@@ -6,17 +6,26 @@ from app import database as db_helper
 #Something about session data
 #View schedule page
 @app.route("/view_schedule", methods=['POST', 'GET'])
-def view_schedules():
+@app.route("/view_schedule:<schedule_id>", methods=['POST', 'GET'])
+def view_schedules(schedule_id=None):
     print("view_schedules page")
     #Display the schedules of netid, the schedules of the friends of netid, and the classes in the schedule
     #assume we have some session variable called netid i guess
     data = request.get_json()
     course_data = []
-    if data is not None and 'sid' in data:
-        schedule_id = data['sid']
+    viewingName = ""
+    if schedule_id is not None:
         crns = db_helper.fetch_courses_by_schedule(schedule_id)
         for crn in crns:
             course_data.append(db_helper.show_details_by_crn(crn))
+
+        scheduleName = db_helper.get_schedule_name(schedule_id)
+
+        if len(scheduleName) > 0 and len(scheduleName[0]) > 0:
+            viewingName = scheduleName[0][0]
+
+        print("COURSE DATA")
+        print(course_data)
 
     student_schedules = []
     friend_schedules = []
@@ -26,7 +35,18 @@ def view_schedules():
         friend_schedules = db_helper.fetch_friend_schedules(netid)
 
 
-    return render_template("View-Schedules.html", sched=student_schedules[:9], fsched=friend_schedules, cdata=course_data, test="tester")
+
+
+    return render_template("View-Schedules.html", sched=student_schedules[:9], fsched=friend_schedules, cdata=course_data, viewName=viewingName)
+
+@app.route("/delete:<schedule_id>:<crn>", methods=['POST', 'GET'])
+def delete_class_from_schedule(schedule_id=None, crn=None):
+    if schedule_id is None or crn is None:
+        return view_schedules()
+
+    db_helper.delete_class_from_schedule(schedule_id, crn)
+
+    return view_schedules(schedule_id)
 
 
 #Generate schedule page
@@ -74,7 +94,7 @@ def gen_schedule():
         rce = db_helper.filter_courses_by_title(rce, session['filter_t'])
 
 
-    
+
     print(rce)
     return render_template("Generate-a-Schedule.html", reqs=reqnames, timec=tc, reqc=rce)
 

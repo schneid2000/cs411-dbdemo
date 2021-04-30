@@ -102,7 +102,7 @@
                           </td>
                           {% endif %}
                           <td class="u-border-1 u-border-grey-30 u-table-cell">
-                            <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-1" href="https://nicepage.com">Select</a>
+                            <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-1" href="view_schedule:{{schedule['schedule_id']}}">Select</a>
                           </td>
                         </tr>
                         {% endfor %}
@@ -254,79 +254,49 @@
     </section>
     <section class="u-clearfix u-section-3" id="sec-dbbe">
       <div class="u-clearfix u-sheet u-sheet-1">
-        <h1 class="u-align-center u-text u-text-1">[Schedule Name]</h1>
+        {% if viewName %}
+        <h1 class="u-align-center u-text u-text-1">{{viewName}}</h1>
+        {% else %}
+        <h1 class="u-align-center u-text u-text-1">Select a schedule</h1>
+        {% endif %}
         <div class="u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
           <div class="u-layout">
             <div class="u-layout-row">
-              <div class="u-container-style u-layout-cell u-size-15 u-layout-cell-1">
+              <div class="u-container-style u-layout-cell u-size-21 u-layout-cell-1">
                 <div class="u-container-layout u-container-layout-1">
                   <div class="u-align-center u-expanded-width u-table u-table-responsive u-table-1">
                     <table class="u-table-entity">
                       <colgroup>
-                        <col width="36.5%">
-                        <col width="30.5%">
-                        <col width="33%">
+                        <col width="30%">
+                        <col width="30%">
+                        <col width="12.5%">
+                        <col width="12.5%">
                       </colgroup>
                       <tbody class="u-table-body">
                         <tr style="height: 67px;">
                           <td class="u-border-1 u-border-grey-30 u-custom-color-1 u-table-cell u-table-cell-1">Class</td>
+                          <td class="u-border-1 u-border-grey-30 u-custom-color-1 u-table-cell u-table-cell-2">Type</td>
                           <td class="u-border-1 u-border-grey-30 u-custom-color-1 u-table-cell u-table-cell-2">CRN</td>
                           <td class="u-border-1 u-border-grey-30 u-custom-color-1 u-table-cell u-table-cell-3">Delete</td>
                         </tr>
+                        {% if cdata %}
+                        {% for class in cdata %}
                         <tr style="height: 70px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">[Class]</td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">[CRN]</td>
+                          <td class="u-border-1 u-border-grey-30 u-table-cell">{{class['class']}} {{class['title']}}</td>
+                          <td class="u-border-1 u-border-grey-30 u-table-cell">{{class['type']}}</td>
+                          <td class="u-border-1 u-border-grey-30 u-table-cell">{{class['crn']}}</td>
                           <td class="u-border-1 u-border-grey-30 u-table-cell">
-                            <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-1" href="https://nicepage.com">Delete</a>
+                            <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-2" href="/delete:{{viewID}}:{{class['crn']}}">Delete</a>
                           </td>
                         </tr>
-                        <tr style="height: 70px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">[Class]</td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">[CRN]</td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">
-                            <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-2" href="https://nicepage.com">Delete</a>
-                          </td>
-                        </tr>
-                        <tr style="height: 70px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">[Class]</td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">[CRN]</td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">
-                            <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-3" href="https://nicepage.com">Delete</a>
-                          </td>
-                        </tr>
-                        <tr style="height: 70px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">[Class]</td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">[CRN]</td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell">
-                            <a class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-link u-button-style u-none u-text-palette-1-base u-btn-4" href="https://nicepage.com">Delete</a>
-                          </td>
-                        </tr>
-                        <tr style="height: 46px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                        </tr>
-                        <tr style="height: 46px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                        </tr>
-                        <tr style="height: 46px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                        </tr>
-                        <tr style="height: 46px;">
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                          <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                        </tr>
+                        {% endfor %}
+                        {% endif %}
                       </tbody>
                     </table>
                   </div>
                 </div>
               </div>
-              <div class="u-container-style u-layout-cell u-size-45 u-layout-cell-2">
+              <div class="u-container-style u-layout-cell u-size-39 u-layout-cell-2">
                 <div class="u-container-layout u-valign-top u-container-layout-2">
                   <div class="u-table u-table-responsive u-table-2">
                     <table class="u-table-entity">

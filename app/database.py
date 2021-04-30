@@ -105,6 +105,15 @@ def create_schedule(netid, sname):
 
     return new_val
 
+def get_schedule_name(schedule_id):
+    if not safe_input(schedule_id):
+        print("not safe input (create_schedule)")
+        return -1
+    conn = db.connect()
+    query = 'SELECT ScheduleName FROM Schedule WHERE ScheduleID = {}'.format(schedule_id)
+    query_results = conn.execute(query).fetchall()
+    return query_results
+
 
 
 def link_schedule(netid, scheduleid):
@@ -275,6 +284,18 @@ def add_constraint_to_schedule(scheduleid, constraintid):
 
     return True
 
+# Removes a course from a given schedule in WithinSchedule
+def delete_class_from_schedule(schedule_id, crn):
+    if not safe_input(schedule_id) or not safe_input(crn):
+        return False
+
+    conn = db.connect()
+    query = 'DELETE FROM WithinSchedule WHERE ScheduleID = {} AND CRN = {}'.format(schedule_id, crn)
+    conn.execute(query)
+    conn.close()
+
+    return True
+
 #Returns true if the selected major exists
 def validate_major(major):
     if not safe_input(major):
@@ -316,7 +337,7 @@ def show_details_by_crn(crn):
         return None
 
     conn = db.connect()
-    query = 'SELECT CRN, Subject, Number, Title, Type, Section, Time, EndTime, Days, Location FROM Class WHERE CRN = {}'.format(crn)
+    query = 'SELECT CRN, Subject, Number, Title, Type, Section, Time, EndTime, Days, Location FROM Class WHERE CRN = {}'.format(crn['crn'])
     query_results = conn.execute(query).fetchall()
     conn.close()
     results = []
@@ -420,7 +441,7 @@ def find_schedule(netid, sname):
     if not safe_input(netid) or not safe_input(sname):
         print("Not safe input (find_schedule)")
         return None
-    
+
     conn = db.connect()
     query = 'SELECT ScheduleID FROM Schedule WHERE Student = "{}" AND ScheduleName = "{}"'.format(netid, sname)
     query_results = conn.execute(query).fetchall()
