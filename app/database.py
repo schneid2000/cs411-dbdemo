@@ -85,8 +85,21 @@ def set_favorite_schedule(netid, scheduleid):
     if not safe_input(netid) or not safe_input(scheduleid):
         return False
     conn = db.connect()
-    query = 'UPDATE Student SET FavoriteSchedule = {} WHERE NetID = "{}"'.format(scheduleid, netid)
+    query = 'SELECT ScheduleID FROM Schedule WHERE Student = "{}" AND IsFavorite = 1'.format(netid)
     query_results = conn.execute(query).fetchall()
+    if len(query_results) > 1:
+        print("set_favorite_schedule, too many favorite schedules")
+        return False
+    if len(query_results) == 1:
+        #Unfavorite the previous favorited schedule if it exists
+        sid = query_results[0][0]
+        query = 'UPDATE Schedule SET IsFavorite = 0 WHERE ScheduleID = {}'.format()
+        conn.execute(query)
+    #Set the student's favorite schedule
+    query = 'UPDATE Student SET FavoriteSchedule = {} WHERE NetID = "{}"'.format(scheduleid, netid)
+    conn.execute(query)
+    #Set the schedule as favorite
+    query = 'UPDATE Schedule SET IsFavorite = 1 WHERE ScheduleID = {}'.format(scheduleid)
     conn.close()
     return True
 
@@ -104,6 +117,15 @@ def create_schedule(netid, sname):
     conn.close()
 
     return new_val
+
+def get_schedule_name(schedule_id):
+    if not safe_input(schedule_id):
+        print("not safe input (create_schedule)")
+        return -1
+    conn = db.connect()
+    query = 'SELECT ScheduleName FROM Schedule WHERE ScheduleID = {}'.format(schedule_id)
+    query_results = conn.execute(query).fetchall()
+    return query_results
 
 
 
@@ -275,6 +297,18 @@ def add_constraint_to_schedule(scheduleid, constraintid):
 
     return True
 
+# Removes a course from a given schedule in WithinSchedule
+def delete_class_from_schedule(schedule_id, crn):
+    if not safe_input(schedule_id) or not safe_input(crn):
+        return False
+
+    conn = db.connect()
+    query = 'DELETE FROM WithinSchedule WHERE ScheduleID = {} AND CRN = {}'.format(schedule_id, crn)
+    conn.execute(query)
+    conn.close()
+
+    return True
+
 #Returns true if the selected major exists
 def validate_major(major):
     if not safe_input(major):
@@ -316,7 +350,7 @@ def show_details_by_crn(crn):
         return None
 
     conn = db.connect()
-    query = 'SELECT CRN, Subject, Number, Title, Type, Section, Time, EndTime, Days, Location FROM Class WHERE CRN = {}'.format(crn)
+    query = 'SELECT CRN, Subject, Number, Title, Type, Section, Time, EndTime, Days, Location FROM Class WHERE CRN = {}'.format(crn['crn'])
     query_results = conn.execute(query).fetchall()
     conn.close()
     results = []
@@ -420,7 +454,7 @@ def find_schedule(netid, sname):
     if not safe_input(netid) or not safe_input(sname):
         print("Not safe input (find_schedule)")
         return None
-    
+
     conn = db.connect()
     query = 'SELECT ScheduleID FROM Schedule WHERE Student = "{}" AND ScheduleName = "{}"'.format(netid, sname)
     query_results = conn.execute(query).fetchall()
