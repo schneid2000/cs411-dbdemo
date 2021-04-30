@@ -60,6 +60,7 @@ def gen_schedule():
 @app.route("/", methods=['POST', 'GET'])
 @app.route("/home", methods=['POST', 'GET'])
 def home():
+    print("homepage")
     netid = ""
     if "netid" in session:
         netid = session['netid']
@@ -70,6 +71,7 @@ def home():
 #Login button
 @app.route("/login", methods=['POST'])
 def login():
+    print("login request")
     result = {'success': False, 'response': 'Login unsuccessful'}
     data = request.get_json()
     if 'netid' in data and 'pw' in data:
@@ -79,6 +81,7 @@ def login():
         #Check if student in db
         existence = db_helper.is_student_in_db(netid)
         if not existence:
+            print("creating user")
             #Create user and login
             major = data['mj']
             creation_status = db_helper.create_user(netid, major, hashed_pass)
@@ -87,6 +90,7 @@ def login():
                 result = {'success': True, 'response': 'Successfully created account'}
 
         else:
+            print("logging in existing user")
             #Attempt login
             login_status = db_helper.verify_hashed_login(netid, hashed_pass)
             if login_status == True:

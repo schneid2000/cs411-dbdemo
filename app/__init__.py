@@ -34,12 +34,22 @@ def init_connection_engine():
             username=os.environ.get('MYSQL_USER'),
             password=os.environ.get('MYSQL_PASSWORD'),
             database=os.environ.get('MYSQL_DB'),
-            host=os.environ.get('MYSQL_HOST')
+            host=os.environ.get('MYSQL_HOST'),
+            query={
+                "unix_socket": "{}/{}".format(
+                    os.environ.get("DB_SOCKET_DIR"),  # e.g. "/cloudsql"
+                    os.environ.get("CLOUD_SQL_CONNECTION_NAME"))  # i.e "<PROJECT-NAME>:<INSTANCE-REGION>:<INSTANCE-NAME>"
+            }
         )
     )
 
     return pool
-
+#INSTANCE_CONNECTION_NAME
+#mercury-scheduler:us-central1:musketeers
+#<PROJECT-NAME>:<INSTANCE-REGION>:<INSTANCE-NAME>
+#instance name - musketeers
+#db_socket_dir = os.environ.get("DB_SOCKET_DIR", "/cloudsql")
+#cloud_sql_connection_name = os.environ["CLOUD_SQL_CONNECTION_NAME"]
 
 def randstr():
     result = ""

@@ -10,6 +10,8 @@ env_variables:
   MYSQL_PASSWORD: '12345'
   MYSQL_DB: 'mercury_scheduler'
   MYSQL_HOST: 104.154.136.67
+  DB_SOCKET_DIR: '/cloudsql'
+  CLOUD_SQL_CONNECTION_NAME: 'mercury-scheduler:us-central1:musketeers'
 
 
 
