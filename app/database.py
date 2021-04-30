@@ -554,14 +554,40 @@ def fetch_time_constraints_by_schedule(scheduleid):
         stime = result[1]
         etime = result[2]
         tcstr = str(stime) + "-" + str(etime)
+        #stime = str(stime / 60) + ':' str(stime % 60)
+        #etime = str(etime / 60) + ':' str(etime % 60)
         final = {
             "id": cid,
-            "str": tcstr
+            "str": tcstr,
+            "stime":stime,
+            "etime":etime
         }
 
         results.append(final)
     return results
 
+def filter_courses_by_tc(prev_result, tc):
+    #tc is an array of dictionaries
+    #Check to make sure all courses are within the time constraints provided
+    conn = db.connect()
+    final_results = []
+    for result in prev_result:
+        crn = result["crn"]
+        good = True
+        for time_constraint in tc:
+            stime = time_constraint['stime']
+            etime = time_constraint['etime']
+            print(stime)
+            print(etime)
+            #The class must appear before the break or after the break
+            query = 'SELECT CRN FROM Class WHERE CRN = {} AND (Time >= {} OR EndTime <= {})'.format(crn, etime, stime)
+            query_results = conn.execute(query).fetchall()
+            if (len(query_results) == 0):
+                good = False
+        if good == True:
+            final_results.append(result)
+    return final_results
+    
 def fetch_course_by_req(reqid):
     if not safe_input(reqid):
         print("not safe input (fetch_req_by_id)")

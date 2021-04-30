@@ -100,7 +100,7 @@ def gen_schedule():
         print(session['filter_t'])
         rc = db_helper.fetch_courses_by_title(session['filter_t'])
 
-    print("here")
+
     rce = []
     for entry in rc:
         rce.append(db_helper.show_details_by_crn(entry))
@@ -112,9 +112,12 @@ def gen_schedule():
         print(session['filter_t'], 'filter_t')
         rce = db_helper.filter_courses_by_title(rce, session['filter_t'])
 
+    if len(tc) != 0:
+        print("tc")
+        rce = db_helper.filter_courses_by_tc(rce, tc)
 
 
-    print(rce)
+    #print(rce)
     return render_template("Generate-a-Schedule.html", reqs=reqnames, timec=tc, reqc=rce)
 
 #Homepage
